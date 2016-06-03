@@ -10,6 +10,7 @@ package modelo;
  * @author Euge
  */
 public class Apuesta {
+    private int oid;
     private int monto;
     private JugadorRuleta jugador;
     private Numero numero;
@@ -47,6 +48,15 @@ public class Apuesta {
     public void setNumero(Numero numero) {
         this.numero = numero;
     }
+
+    public int getOid() {
+        return oid;
+    }
+
+    public void setOid(int oid) {
+        this.oid = oid;
+    }
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Metodos"> 

@@ -11,6 +11,7 @@ package modelo;
  * @author Euge
  */
 public class Jugador {
+    private int oid;
     private String nombre;
     private String password;
     private String nombreCompleto;
@@ -99,6 +100,14 @@ public class Jugador {
     
     public long getTotalApostado() {
         return totalApostado;
+    }
+
+    public int getOid() {
+        return oid;
+    }
+
+    public void setOid(int oid) {
+        this.oid = oid;
     }
  
     // </editor-fold>

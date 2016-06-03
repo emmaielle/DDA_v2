@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author Euge
  */
 public class Ronda {
+    private int oid;
     private final int nroRonda;
     private Apuesta apuestaGanadora;
     private int nroGanador = -1;
@@ -43,6 +44,15 @@ public class Ronda {
     public ArrayList<Apuesta> getApuestas() {
         return apuestas;
     }
+
+    public int getOid() {
+        return oid;
+    }
+
+    public void setOid(int oid) {
+        this.oid = oid;
+    }
+    
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Metodos">
