@@ -25,8 +25,9 @@ public interface VistaMesa {
     public void mostrarSaldo(long saldoJugador);
     public void mostrarTotalApostado(long total);
     public void mensajeRonda(String msj);
-    public void cerrarVentana();
+    public void cerrarVentana(String msj);
     public void colorSaldo(Color color);
     public void colorJugador(Color color);
     public void verApuestas(JugadorRuleta j);
+    public void mostrarSegundos(int s);
 }

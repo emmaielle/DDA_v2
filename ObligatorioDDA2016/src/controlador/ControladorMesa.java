@@ -14,6 +14,7 @@ import modelo.JugadorRuleta;
 import modelo.Mesa;
 import modelo.Modelo;
 import modelo.Numero;
+import modelo.Proceso;
 
 /**
  *
@@ -22,6 +23,7 @@ import modelo.Numero;
 public class ControladorMesa implements Observer {
 
     private Modelo modelo = Modelo.getInstancia();
+    private Proceso proceso;
     private VistaMesa vista;
     private JugadorRuleta jugador;
     private Mesa mesa;
@@ -30,13 +32,24 @@ public class ControladorMesa implements Observer {
         this.vista = vista;
         this.jugador = jr;
         this.mesa= m;
+        this.proceso = (m.buscarRonda(m.getUltimaRonda())).getElProceso();
         vista.mostrar(mesa.getNumeros());
         modelo.addObserver(this);
+        proceso.addObserver(this);
     }
     
     @Override
     public void update(Observable o, Object arg) {
-        if(arg.equals(Modelo.EVENTO_TABLERO)){
+        if (arg.equals(Proceso.EVENTO_ADD_SECONDS)){
+            vista.mostrarSegundos(Proceso.getSegundos());
+        }
+        else if (arg.equals(Proceso.EVENTO_TIME_OUT)){
+            //vista.mostrarSegundos(Proceso.getSegundos());
+            System.out.println("Echar de mesa!!");
+            
+            if (jugador.sinApostarTresVeces()) vista.cerrarVentana("Ha pasado 3 rondas sin apostar");
+        }
+        else if(arg.equals(Modelo.EVENTO_TABLERO)){
             vista.mostrar(mesa.getNumeros());
             long tot = mesa.buscarRonda(mesa.getUltimaRonda()).totalApostadoRonda(jugador); // mas limpio??
             vista.mostrarTotalApostado(tot);
@@ -51,7 +64,7 @@ public class ControladorMesa implements Observer {
             vista.mostrarJugadores(modelo.getJugadoresPorMesa(mesa));
         }
         else if (arg.equals(Modelo.EVENTO_CHECK_SALDOS)){
-            if (jugador.expulsado()) vista.cerrarVentana();
+            if (jugador.expulsado()) vista.cerrarVentana("Se le terminó el saldo");
         }
         else if(arg.equals(Modelo.EVENTO_ACTUALIZA_SALDOS))
             vista.mostrarSaldo(jugador.getJugador().getSaldo());
@@ -80,7 +93,7 @@ public class ControladorMesa implements Observer {
     }
 
     public void finalizarApuesta()  { 
-        int sorteado = modelo.finalizarApuesta(mesa);
+        int sorteado = modelo.finalizarApuesta(mesa, jugador);
         if(sorteado!= -1){
             vista.habilitar(true);
             mesa.avisarCheckSaldo();

@@ -18,13 +18,17 @@ public class Ronda {
     private Apuesta apuestaGanadora;
     private int nroGanador = -1;
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
-    private static int TIEMPO_LIMITE = 5;
-    private Mesa mesa;
+    private static int TIEMPO_LIMITE = 1; // minutos
+    private final Mesa mesa;
+    private final Proceso elProceso;
 
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
     public Ronda(int numRonda, Mesa m) {
         nroRonda = numRonda;
         mesa = m;
+        elProceso = new Proceso();
+        elProceso.reset();
+        elProceso.ejecutar();
     }
     //</editor-fold>
     
@@ -68,6 +72,12 @@ public class Ronda {
     public void setOid(int oid) {
         this.oid = oid;
     }
+
+    public Proceso getElProceso() {
+        return elProceso;
+    }
+    
+    
     
     // </editor-fold>
 
@@ -167,6 +177,13 @@ public class Ronda {
         return total;
     }
     // </editor-fold>
+
+    public boolean areThereBetsInThisRondaForThisPlayer(JugadorRuleta jugador) {
+        for (Apuesta a : apuestas){
+            if (a.getJugador().equals(jugador)) return true;
+        }
+        return false;
+    }
 
 
 }

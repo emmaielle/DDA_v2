@@ -88,7 +88,11 @@ public class JugadorRuleta {
     }
 
     public boolean expulsado() {
-        return jugador.getSaldo() == 0 || this.rondasSinApostar == 3;
+        return jugador.getSaldo() == 0;
+    }
+    
+    public boolean sinApostarTresVeces(){
+        return this.rondasSinApostar > 2;
     }
     
     // </editor-fold>

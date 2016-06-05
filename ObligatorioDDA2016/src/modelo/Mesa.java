@@ -99,7 +99,12 @@ public class Mesa {
         jugadoresEspera.remove(j);
         j.getJugador().setEnMesa(false);
         if(jugadoresMesa.size()>0) buscarRonda(getUltimaRonda()).eliminarApuestas(j);
-        if (!j.isApostado()) apuestaTotal();
+        if (!j.isApostado()) {
+            apuestaTotal();
+        }
+        j.setRondasSinApostar(0);
+        System.out.println("QUITAR: Rondas sin apostar " + j.getJugador().getNombreCompleto() + 
+                ". Rondas: " + j.getRondasSinApostar());
         Modelo.getInstancia().avisar(Modelo.EVENTO_SALIR_MESA);
         // no necesito quitar mesa de j, porque se va a eliminar solo con el garbage collector
     }
@@ -250,9 +255,16 @@ public class Mesa {
         Modelo.getInstancia().avisar(Modelo.EVENTO_ACTUALIZA_SALDOS);
     }
 
-    public int finalizarApuesta(){
-        cantFinalizados++;
+    public int finalizarApuestaPorTiempo(){
+        cantFinalizados = jugadoresMesa.size();
         return apuestaTotal();
+    }
+    
+    public int finalizarApuesta(JugadorRuleta jr){
+        cantFinalizados++;
+        int nroSorteado = apuestaTotal();
+        jr.setRondasSinApostar(0);
+        return nroSorteado;
     } 
     
     public void yaApostado(boolean si){
@@ -261,12 +273,23 @@ public class Mesa {
         }
     }
     public int apuestaTotal() {
+        // a cada jugador en juego le suma una ronda sin apostar. Los que si habian apostado quedan 
+        // en 0 y los que tenian X rondas sin apostar le suman 1.
         // cuando terminaron de apostar todos. O cuando apostaron todos menos uno que se va
         if(cantFinalizados == jugadoresMesa.size() || cantFinalizados == jugadoresMesa.size() + 1){ 
             yaApostado(false);
+            sumarRondaSinApostar();
             return sortearNumeroGanador();
         }
         else return -1;
+    }
+    
+    private void sumarRondaSinApostar() {
+        for (JugadorRuleta jr : jugadoresMesa){
+            jr.setRondasSinApostar(jr.getRondasSinApostar() + 1);
+            System.out.println("Rondas sin apostar " + jr.getJugador().getNombreCompleto() + 
+                ". Rondas: " + jr.getRondasSinApostar());
+        }
     }
     
     public void avisarCheckSaldo()  {
@@ -290,6 +313,8 @@ public class Mesa {
         return nombre.equalsIgnoreCase(m.getNombre());
     }
      // </editor-fold>
+
+
 
    
 }

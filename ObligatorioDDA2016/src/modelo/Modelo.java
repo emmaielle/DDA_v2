@@ -113,8 +113,8 @@ public class Modelo extends Observable {
         mesa.apostarUnNumero(n, v, jugador);
     }  
 
-    public int finalizarApuesta(Mesa mesa) {
-        return mesa.finalizarApuesta();
+    public int finalizarApuesta(Mesa mesa, JugadorRuleta jr) {
+        return mesa.finalizarApuesta(jr);
     }
 
     public void salirDeMesaRuleta(JugadorRuleta jugador, Mesa mesa) {

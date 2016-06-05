@@ -23,7 +23,7 @@ public class PanelDatos extends javax.swing.JPanel {
         initComponents();
         controlador = c;
         txt_valorApuesta.setText("0");
-        
+        mostrarSegundos(0);
     }
 
     @SuppressWarnings("unchecked")
@@ -48,6 +48,7 @@ public class PanelDatos extends javax.swing.JPanel {
         lbl_totalApostadoRonda = new javax.swing.JLabel();
         lbl_color = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        lbl_tiempo = new javax.swing.JLabel();
 
         setLayout(null);
 
@@ -63,7 +64,7 @@ public class PanelDatos extends javax.swing.JPanel {
 
         jLabel2.setText("Jugadores en mesa:");
         add(jLabel2);
-        jLabel2.setBounds(350, 20, 140, 14);
+        jLabel2.setBounds(350, 0, 140, 14);
 
         nroSorteado.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         add(nroSorteado);
@@ -121,7 +122,7 @@ public class PanelDatos extends javax.swing.JPanel {
 
         lbl_color.setText("Mi Color");
         add(lbl_color);
-        lbl_color.setBounds(490, 20, 70, 14);
+        lbl_color.setBounds(350, 20, 70, 14);
 
         jButton1.setText("Ver apuestas realizadas");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +132,10 @@ public class PanelDatos extends javax.swing.JPanel {
         });
         add(jButton1);
         jButton1.setBounds(400, 180, 170, 40);
+
+        lbl_tiempo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        add(lbl_tiempo);
+        lbl_tiempo.setBounds(514, 4, 50, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_finalizarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarAActionPerformed
@@ -163,6 +168,7 @@ public class PanelDatos extends javax.swing.JPanel {
     private javax.swing.JLabel lbl_color;
     private javax.swing.JLabel lbl_mensajes;
     private javax.swing.JLabel lbl_saldo;
+    private javax.swing.JLabel lbl_tiempo;
     private javax.swing.JLabel lbl_total;
     private javax.swing.JLabel lbl_totalApostadoRonda;
     private javax.swing.JLabel lbl_total_apostado;
@@ -224,6 +230,10 @@ public class PanelDatos extends javax.swing.JPanel {
 
     public void colorJugador(Color color) {
         lbl_color.setForeground(color);
+    }
+
+    public void mostrarSegundos(int i) {
+        lbl_tiempo.setText(i + "");   
     }
 
 }
