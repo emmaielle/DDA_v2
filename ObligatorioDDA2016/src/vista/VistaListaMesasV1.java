@@ -21,6 +21,7 @@ public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaLista
 
     private ControladorListaMesas controlador;
     private VistaMesaV1 vistaMesa;
+    
     public VistaListaMesasV1(Jugador j) {
         initComponents();
         controlador = new ControladorListaMesas(j,this);
@@ -74,7 +75,7 @@ public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaLista
 
         jLabel3.setText("Nombre:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(10, 220, 80, 20);
+        jLabel3.setBounds(40, 220, 80, 20);
 
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -83,9 +84,9 @@ public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaLista
             }
         });
         getContentPane().add(btnCrear);
-        btnCrear.setBounds(280, 220, 73, 23);
+        btnCrear.setBounds(270, 220, 73, 23);
 
-        setBounds(0, 0, 483, 373);
+        setBounds(0, 0, 483, 410);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_enterTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enterTableActionPerformed
@@ -157,6 +158,7 @@ public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaLista
             vistaMesa.salirDeMesa(); 
             vistaMesa.dispose();
         }
+        
     }
 
     @Override
@@ -168,4 +170,6 @@ public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaLista
     public void eliminarObservador() {
         controlador.eliminarObservador();
     }
+
+    
 }

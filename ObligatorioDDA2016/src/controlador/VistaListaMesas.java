@@ -21,4 +21,5 @@ public interface VistaListaMesas {
     public void ingresarMesa();
     public void crearMesa();
     public void eliminarObservador();
+    //public void verApuestas(Jugador j);
 }

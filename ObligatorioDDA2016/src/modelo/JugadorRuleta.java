@@ -18,6 +18,7 @@ public class JugadorRuleta {
     private Jugador jugador;
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
     private boolean apostado;
+    private int rondasSinApostar;
     
     // <editor-fold defaultstate="collapsed" desc="Constructor">       
     public JugadorRuleta(Color color, Mesa mesa, Jugador jugador) {
@@ -64,6 +65,15 @@ public class JugadorRuleta {
     public boolean isApostado() {
         return apostado;
     }
+
+    public int getRondasSinApostar() {
+        return rondasSinApostar;
+    }
+
+    public void setRondasSinApostar(int rondasSinApostar) {
+        this.rondasSinApostar = rondasSinApostar;
+    }
+    
     
     
     // </editor-fold>
@@ -78,7 +88,7 @@ public class JugadorRuleta {
     }
 
     public boolean expulsado() {
-        return jugador.getSaldo() == 0;
+        return jugador.getSaldo() == 0 || this.rondasSinApostar == 3;
     }
     
     // </editor-fold>

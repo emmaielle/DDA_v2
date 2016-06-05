@@ -108,4 +108,7 @@ public class ControladorMesa implements Observer {
     public void colorJugador(Color color) {
         vista.colorJugador(color);
     }
+    public void verApuestas() {
+        vista.verApuestas(jugador);
+    }
 }

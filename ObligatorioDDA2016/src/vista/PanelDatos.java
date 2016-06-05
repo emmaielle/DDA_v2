@@ -47,6 +47,7 @@ public class PanelDatos extends javax.swing.JPanel {
         lbl_total_apostado1 = new javax.swing.JLabel();
         lbl_totalApostadoRonda = new javax.swing.JLabel();
         lbl_color = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -121,6 +122,15 @@ public class PanelDatos extends javax.swing.JPanel {
         lbl_color.setText("Mi Color");
         add(lbl_color);
         lbl_color.setBounds(490, 20, 70, 14);
+
+        jButton1.setText("Ver apuestas realizadas");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1);
+        jButton1.setBounds(400, 180, 170, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_finalizarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarAActionPerformed
@@ -136,9 +146,14 @@ public class PanelDatos extends javax.swing.JPanel {
         
     }//GEN-LAST:event_txt_valorApuestaFocusLost
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        controlador.verApuestas();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_finalizarA;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
