@@ -21,7 +21,7 @@ public class Ronda implements Observer{
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
     private static int TIEMPO_LIMITE = 1; // minutos
     private final Mesa mesa;
-    private final static Proceso elProceso = new Proceso();
+    private final Proceso elProceso = new Proceso();
 
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
     public Ronda(int numRonda, Mesa m) {
@@ -195,7 +195,7 @@ public class Ronda implements Observer{
         }
         else if (arg.equals(Proceso.EVENTO_TIME_OUT)){            
             mesa.finalizarApuestaPorTiempo();
-            Modelo.getInstancia().avisar(Modelo.EVENTO_TIME_OUT);
+            Modelo.getInstancia().avisar(Modelo.EVENTO_SIN_JUGAR);
         }
     }
 

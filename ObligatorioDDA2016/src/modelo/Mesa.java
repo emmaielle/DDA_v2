@@ -269,6 +269,7 @@ public class Mesa {
     public int finalizarApuesta(JugadorRuleta jr){
         cantFinalizados++;
         int nroSorteado = apuestaTotal();
+        Modelo.getInstancia().avisar(Modelo.EVENTO_SIN_JUGAR);
         return nroSorteado;
     } 
     

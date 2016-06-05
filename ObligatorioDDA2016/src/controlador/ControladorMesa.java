@@ -40,10 +40,10 @@ public class ControladorMesa implements Observer {
         if (arg.equals(Modelo.EVENTO_ADD_SECONDS)){
             vista.mostrarSegundos(Proceso.getSegundos());
         }
-        else if (arg.equals(Modelo.EVENTO_TIME_OUT)){
+        else if (arg.equals(Modelo.EVENTO_SIN_JUGAR)){
             //vista.mostrarSegundos(Proceso.getSegundos());
             //System.out.println("Echar de mesa!!");
-            if (jugador.sinApostarTresVeces()) vista.cerrarVentana("Ha pasado 3 rondas sin apostar");
+            echarDeMesaPorNoJugar();
         }
         else if(arg.equals(Modelo.EVENTO_TABLERO)){
             vista.mostrar(mesa.getNumeros());
@@ -119,5 +119,9 @@ public class ControladorMesa implements Observer {
     }
     public void verApuestas() {
         vista.verApuestas(jugador);
+    }
+    
+    public void echarDeMesaPorNoJugar(){
+        if (jugador.sinApostarTresVeces()) vista.cerrarVentana("Ha pasado 3 rondas sin apostar");
     }
 }
