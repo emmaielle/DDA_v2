@@ -102,9 +102,10 @@ public class Mesa {
         if (!j.isApostado()) {
             apuestaTotal();
         }
-        j.setRondasSinApostar(0);
         System.out.println("QUITAR: Rondas sin apostar " + j.getJugador().getNombreCompleto() + 
                 ". Rondas: " + j.getRondasSinApostar());
+        j.setRondasSinApostar(0);
+        j.setRondasSinApostarAnterior(0);
         Modelo.getInstancia().avisar(Modelo.EVENTO_SALIR_MESA);
         // no necesito quitar mesa de j, porque se va a eliminar solo con el garbage collector
     }
@@ -162,6 +163,11 @@ public class Mesa {
         numeros.add(new Numero(34, Color.red));
         numeros.add(new Numero(35, Color.black));
         numeros.add(new Numero(36, Color.red));
+        if (getUltimaRonda() != 0){
+            buscarRonda(getUltimaRonda()).stopProceso();
+            buscarRonda(getUltimaRonda()).quitarObservador();
+        }
+        
         Ronda ronda = new Ronda(getUltimaRonda() + 1, this);
         rondas.add(ronda);
         cantFinalizados=0;
@@ -263,7 +269,6 @@ public class Mesa {
     public int finalizarApuesta(JugadorRuleta jr){
         cantFinalizados++;
         int nroSorteado = apuestaTotal();
-        jr.setRondasSinApostar(0);
         return nroSorteado;
     } 
     
@@ -285,8 +290,13 @@ public class Mesa {
     }
     
     private void sumarRondaSinApostar() {
+        Ronda ultRonda = buscarRonda(getUltimaRonda());
         for (JugadorRuleta jr : jugadoresMesa){
-            jr.setRondasSinApostar(jr.getRondasSinApostar() + 1);
+            boolean haApostado = false;
+            for (Apuesta a: jr.getApuestas()){
+                if (a.getRonda().equals(ultRonda)) haApostado = true;
+            }
+            if (!haApostado) jr.setRondasSinApostar(jr.getRondasSinApostar() + 1);
             System.out.println("Rondas sin apostar " + jr.getJugador().getNombreCompleto() + 
                 ". Rondas: " + jr.getRondasSinApostar());
         }

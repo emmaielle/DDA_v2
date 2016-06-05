@@ -7,12 +7,13 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Observer;
 
 /**
  *
  * @author Euge
  */
-public class Ronda {
+public class Ronda implements Observer{
     private int oid;
     private final int nroRonda;
     private Apuesta apuestaGanadora;
@@ -20,13 +21,13 @@ public class Ronda {
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
     private static int TIEMPO_LIMITE = 1; // minutos
     private final Mesa mesa;
-    private final Proceso elProceso;
+    private final static Proceso elProceso = new Proceso();
 
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
     public Ronda(int numRonda, Mesa m) {
         nroRonda = numRonda;
         mesa = m;
-        elProceso = new Proceso();
+        elProceso.addObserver(this);
         elProceso.reset();
         elProceso.ejecutar();
     }
@@ -73,10 +74,7 @@ public class Ronda {
         this.oid = oid;
     }
 
-    public Proceso getElProceso() {
-        return elProceso;
-    }
-    
+
     
     
     // </editor-fold>
@@ -107,6 +105,10 @@ public class Ronda {
         if (yaApostada == null){ // si entra aca es porque ese numero no fue elegido antes
             Apuesta a = new Apuesta(v, jugador, n, this, Calendar.getInstance());
             if (a.validar()){
+                if (!areThereBetsInThisRondaForThisPlayer(jugador)) {
+                    jugador.setRondasSinApostarAnterior(jugador.getRondasSinApostar());
+                    jugador.setRondasSinApostar(0);
+                }
                 agregarApuesta(a);
                 jugador.getJugador().modificarSaldo(false, v);
             }
@@ -118,6 +120,7 @@ public class Ronda {
         Apuesta yaApostada = buscarApuestaPorNumero(n);
         if (yaApostada.getJugador().equals(j)) 
             quitarApuesta(yaApostada);
+        if (!areThereBetsInThisRondaForThisPlayer(j)) j.setRondasSinApostar(j.getRondasSinApostarAnterior());
     }
     
     public void quitarApuesta(Apuesta a){
@@ -183,6 +186,25 @@ public class Ronda {
             if (a.getJugador().equals(jugador)) return true;
         }
         return false;
+    }
+
+    @Override
+    public void update(java.util.Observable o, Object arg) {
+        if (arg.equals(Proceso.EVENTO_ADD_SECONDS)){
+            Modelo.getInstancia().avisar(Modelo.EVENTO_ADD_SECONDS);
+        }
+        else if (arg.equals(Proceso.EVENTO_TIME_OUT)){            
+            mesa.finalizarApuestaPorTiempo();
+            Modelo.getInstancia().avisar(Modelo.EVENTO_TIME_OUT);
+        }
+    }
+
+    public void stopProceso() {
+        elProceso.parar();
+    }
+
+    void quitarObservador() {
+        elProceso.deleteObserver(this);
     }
 
 

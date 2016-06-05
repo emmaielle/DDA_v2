@@ -23,7 +23,6 @@ import modelo.Proceso;
 public class ControladorMesa implements Observer {
 
     private Modelo modelo = Modelo.getInstancia();
-    private Proceso proceso;
     private VistaMesa vista;
     private JugadorRuleta jugador;
     private Mesa mesa;
@@ -32,21 +31,18 @@ public class ControladorMesa implements Observer {
         this.vista = vista;
         this.jugador = jr;
         this.mesa= m;
-        this.proceso = (m.buscarRonda(m.getUltimaRonda())).getElProceso();
         vista.mostrar(mesa.getNumeros());
         modelo.addObserver(this);
-        proceso.addObserver(this);
     }
     
     @Override
     public void update(Observable o, Object arg) {
-        if (arg.equals(Proceso.EVENTO_ADD_SECONDS)){
+        if (arg.equals(Modelo.EVENTO_ADD_SECONDS)){
             vista.mostrarSegundos(Proceso.getSegundos());
         }
-        else if (arg.equals(Proceso.EVENTO_TIME_OUT)){
+        else if (arg.equals(Modelo.EVENTO_TIME_OUT)){
             //vista.mostrarSegundos(Proceso.getSegundos());
-            System.out.println("Echar de mesa!!");
-            
+            //System.out.println("Echar de mesa!!");
             if (jugador.sinApostarTresVeces()) vista.cerrarVentana("Ha pasado 3 rondas sin apostar");
         }
         else if(arg.equals(Modelo.EVENTO_TABLERO)){

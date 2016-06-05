@@ -45,7 +45,7 @@ public class JuegoRuleta  {
     
     public void cerrarMesa(Mesa m){
         listadoMesas.remove(m);
-        (m.buscarRonda(m.getUltimaRonda())).getElProceso().parar();
+        (m.buscarRonda(m.getUltimaRonda())).stopProceso();
         Modelo.getInstancia().avisar(Modelo.EVENTO_SALIR_MESA);
     }
     
