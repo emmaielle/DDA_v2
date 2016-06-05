@@ -7,6 +7,7 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -21,6 +22,7 @@ public class Ronda {
     private static int TIEMPO_LIMITE = 1; // minutos
     private final Mesa mesa;
     private final Proceso elProceso;
+    private Date fechaYhoraFin;
 
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
     public Ronda(int numRonda, Mesa m) {
@@ -76,6 +78,18 @@ public class Ronda {
     public Proceso getElProceso() {
         return elProceso;
     }
+
+    public Date getFechaYhoraFin() {
+        return fechaYhoraFin;
+    }
+
+    public void setFechaYhoraFin(Date fechaYhoraFin) {
+        this.fechaYhoraFin = fechaYhoraFin;
+    }
+    //agregue para la persistencia
+    public void setNroGanador(int nroGanador) {
+        this.nroGanador = nroGanador;
+    }
     
     
     
@@ -89,6 +103,7 @@ public class Ronda {
             int randomOut = (int)Math.floor(Math.random()*37);
             nroGanador = randomOut; 
             lookForWinner();
+            this.fechaYhoraFin=new Date();
             return randomOut;
         }
         return nroGanador;
@@ -105,7 +120,7 @@ public class Ronda {
     public void apostar(Numero n, int v, JugadorRuleta jugador) { //funciona en ambos sentidos si se clickea de nuevo
         Apuesta yaApostada = buscarApuestaPorNumero(n);
         if (yaApostada == null){ // si entra aca es porque ese numero no fue elegido antes
-            Apuesta a = new Apuesta(v, jugador, n, this, Calendar.getInstance());
+            Apuesta a = new Apuesta(v, jugador, n, this, new Date());
             if (a.validar()){
                 agregarApuesta(a);
                 jugador.getJugador().modificarSaldo(false, v);

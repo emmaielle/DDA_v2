@@ -6,7 +6,7 @@
 package modelo;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -18,12 +18,12 @@ public class Apuesta {
     private JugadorRuleta jugador;
     private Numero numero;
     private Ronda ronda;
-    private final Calendar fechaHora;
+    private final Date fechaHora;
     private int montoGanado;
 
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
-    public Apuesta(int monto, JugadorRuleta jugador, Numero numero, Ronda ronda, Calendar fechaHora) {
+    public Apuesta(int monto, JugadorRuleta jugador, Numero numero, Ronda ronda, Date fechaHora) {
         this.monto = monto;
         this.jugador = jugador;
         this.numero = numero;
@@ -49,7 +49,7 @@ public class Apuesta {
         this.montoGanado = montoGanado;
     }
 
-    public Calendar getFechaHora() {
+    public Date getFechaHora() {
         return fechaHora;
     }
 

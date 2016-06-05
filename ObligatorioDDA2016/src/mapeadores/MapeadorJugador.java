@@ -76,7 +76,7 @@ public class MapeadorJugador implements Persistente {
             j.setOid(rs.getInt("oid"));
             j.setNombre(rs.getString("nombre"));
             j.setNombreCompleto(rs.getString("nombreUsuario"));
-            //q pasa con el saldo?
+            j.setSaldo(rs.getInt("saldo"));
         } catch (SQLException ex) {
             System.out.println("Error al leer usuario:" + ex.getMessage());
         }
@@ -84,12 +84,12 @@ public class MapeadorJugador implements Persistente {
 
     @Override
     public void crearNuevo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        j = new Jugador();
     }
 
     @Override
     public Object getObjeto() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return j;
     }
     
 }
