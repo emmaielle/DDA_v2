@@ -29,6 +29,8 @@ public class VistaMesaV1 extends javax.swing.JDialog implements VistaMesa, Actio
     private JSplitPane split = new JSplitPane();
     private PanelTablero bottom;
     private PanelDatos top;
+    private VistaApuestasV1 vistaApuestas;
+
 
     public VistaMesaV1(Mesa m, Jugador j) {
         initComponents();
@@ -141,6 +143,9 @@ public class VistaMesaV1 extends javax.swing.JDialog implements VistaMesa, Actio
     @Override
     public void cerrarVentana() {
         JOptionPane.showMessageDialog(this, "Se le terminó el saldo");
+        if (vistaApuestas != null){
+            vistaApuestas.dispose();
+        }
         salirDeMesa();
         dispose();
     }
@@ -155,5 +160,11 @@ public class VistaMesaV1 extends javax.swing.JDialog implements VistaMesa, Actio
         top.colorJugador(color);
     }
    
+    @Override
+    public void verApuestas(JugadorRuleta j) {
+        vistaApuestas = new VistaApuestasV1(j);
+        vistaApuestas.setLocationRelativeTo(null);
+        vistaApuestas.setVisible(true);
+    }
 
 }

@@ -76,5 +76,7 @@ public class ControladorListaMesas implements Observer {
     public void eliminarObservador() {
         modelo.deleteObserver(this);
     }
+
+
    
 }

@@ -5,6 +5,9 @@
  */
 package modelo;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  *
  * @author Euge
@@ -14,13 +17,18 @@ public class Apuesta {
     private int monto;
     private JugadorRuleta jugador;
     private Numero numero;
+    private Ronda ronda;
+    private final Calendar fechaHora;
+    private int montoGanado;
 
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
-    public Apuesta(int monto, JugadorRuleta jugador, Numero numero) {
+    public Apuesta(int monto, JugadorRuleta jugador, Numero numero, Ronda ronda, Calendar fechaHora) {
         this.monto = monto;
         this.jugador = jugador;
         this.numero = numero;
+        this.ronda = ronda;
+        this.fechaHora = fechaHora;
     }
     // </editor-fold>
 
@@ -33,6 +41,26 @@ public class Apuesta {
         this.monto = monto;
     }
 
+    public int getMontoGanado() {
+        return montoGanado;
+    }
+
+    public void setMontoGanado(int montoGanado) {
+        this.montoGanado = montoGanado;
+    }
+
+    public Calendar getFechaHora() {
+        return fechaHora;
+    }
+
+    public Ronda getRonda() {
+        return ronda;
+    }
+
+    public void setRonda(Ronda ronda) {
+        this.ronda = ronda;
+    }
+    
     public JugadorRuleta getJugador() {
         return jugador;
     }
@@ -64,4 +92,17 @@ public class Apuesta {
         return monto > 0 && jugador != null && numero != null; 
     }
     // </editor-fold>
+
+    @Override
+    public String toString() {
+         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
+            return "Mesa: " + this.getRonda().getMesa().getNombre() + "; Fecha: " +
+                    sdf.format(this.getFechaHora().getTime()) + "; Hora: " +
+                    sdf1.format(this.getFechaHora().getTime())
+                    + "; Numero: " + this.getNumero().getValor() + 
+                    "; Monto ganado: " + this.getMontoGanado();
+    }
+    
+    
 }

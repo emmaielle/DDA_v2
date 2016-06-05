@@ -157,7 +157,7 @@ public class Mesa {
         numeros.add(new Numero(34, Color.red));
         numeros.add(new Numero(35, Color.black));
         numeros.add(new Numero(36, Color.red));
-        Ronda ronda = new Ronda(getUltimaRonda() + 1);
+        Ronda ronda = new Ronda(getUltimaRonda() + 1, this);
         rondas.add(ronda);
         cantFinalizados=0;
     }

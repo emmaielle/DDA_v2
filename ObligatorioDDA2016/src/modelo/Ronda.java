@@ -6,6 +6,7 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  *
@@ -17,10 +18,13 @@ public class Ronda {
     private Apuesta apuestaGanadora;
     private int nroGanador = -1;
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
+    private static int TIEMPO_LIMITE = 5;
+    private Mesa mesa;
 
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
-    public Ronda(int numRonda) {
+    public Ronda(int numRonda, Mesa m) {
         nroRonda = numRonda;
+        mesa = m;
     }
     //</editor-fold>
     
@@ -29,6 +33,18 @@ public class Ronda {
         return nroGanador;
     }
 
+    public static int getTIEMPO_LIMITE() {
+        return TIEMPO_LIMITE;
+    }
+
+    public static void setTIEMPO_LIMITE(int TIEMPO_LIMITE) {
+        Ronda.TIEMPO_LIMITE = TIEMPO_LIMITE;
+    }
+
+    public Mesa getMesa() {
+        return mesa;
+    }
+    
     public void setApuestas(ArrayList<Apuesta> apuestas) {
         this.apuestas = apuestas;
     }
@@ -79,7 +95,7 @@ public class Ronda {
     public void apostar(Numero n, int v, JugadorRuleta jugador) { //funciona en ambos sentidos si se clickea de nuevo
         Apuesta yaApostada = buscarApuestaPorNumero(n);
         if (yaApostada == null){ // si entra aca es porque ese numero no fue elegido antes
-            Apuesta a = new Apuesta(v, jugador, n);
+            Apuesta a = new Apuesta(v, jugador, n, this, Calendar.getInstance());
             if (a.validar()){
                 agregarApuesta(a);
                 jugador.getJugador().modificarSaldo(false, v);
@@ -99,6 +115,7 @@ public class Ronda {
         a.getNumero().setApuesta(null);
         a.getJugador().quitarApuesta(a);
         a.setJugador(null);
+        a.setRonda(null);
         apuestas.remove(a);
         Modelo.getInstancia().avisar(Modelo.EVENTO_TABLERO);
     }
@@ -123,8 +140,12 @@ public class Ronda {
                 j.modificarSaldo(true, a.getMonto()* 35);
                 j.setTotalCobrado(j.getTotalCobrado() + a.getMonto() * 35);
                 j.setTotalApostado(j.getTotalApostado() + a.getMonto());
+                a.setMontoGanado(a.getMonto()* 35);
             }
-            else j.setTotalApostado(j.getTotalApostado() + a.getMonto());
+            else {
+                j.setTotalApostado(j.getTotalApostado() + a.getMonto());
+                a.setMontoGanado(0);
+            }
         }
         Modelo.getInstancia().avisar(Modelo.EVENTO_ACTUALIZA_SALDOS);
     }
