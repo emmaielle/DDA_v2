@@ -19,6 +19,7 @@ public class JugadorRuleta {
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
     private boolean apostado;
     private int rondasSinApostar;
+    private int rondasSinApostarAnterior;
     
     // <editor-fold defaultstate="collapsed" desc="Constructor">       
     public JugadorRuleta(Color color, Mesa mesa, Jugador jugador) {
@@ -38,6 +39,14 @@ public class JugadorRuleta {
         this.jugador = jugador;
     }
 
+    public int getRondasSinApostarAnterior() {
+        return rondasSinApostarAnterior;
+    }
+
+    public void setRondasSinApostarAnterior(int rondasSinApostarAnterior) {
+        this.rondasSinApostarAnterior = rondasSinApostarAnterior;
+    }
+    
     public Mesa getMesa() {
         return mesa;
     }

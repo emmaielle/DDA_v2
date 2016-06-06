@@ -39,9 +39,12 @@ public class Proceso implements Runnable{
     public synchronized void deleteObserver(Observer o) {
         observable.deleteObserver(o);
     }
-    
+    private void avisar(Object evento){
+        observable.avisar(evento);
+    }
+
     public void ejecutar(){
-        if(!ejecutar){
+        if(!ejecutar && segundos<10){
             ejecutar = true;
             hilo = new Thread(this);
             hilo.start();
@@ -50,6 +53,7 @@ public class Proceso implements Runnable{
 
     public void parar(){
         ejecutar=false;
+        //para cortar el sleep
         hilo.interrupt();
     }
     
@@ -58,27 +62,21 @@ public class Proceso implements Runnable{
         avisar(Proceso.EVENTO_ADD_SECONDS);
     }
     
-    private void avisar(Object evento){
-        observable.avisar(evento);
-    }
-
+    
     
     @Override
     public void run() {
-        try {
-            while (ejecutar){
-                while (segundos < Ronda.getTIEMPO_LIMITE()*10){
-                    hilo.sleep(1000);
-                    segundos ++;
-                    avisar(Proceso.EVENTO_ADD_SECONDS);
-                }
-                reset();
-                
-                avisar(Proceso.EVENTO_TIME_OUT);
+        for (;segundos< Ronda.getTIEMPO_LIMITE()*10&&ejecutar;segundos++){
+            avisar(Proceso.EVENTO_ADD_SECONDS);
+            try {
+                hilo.sleep(1000);               
+            } catch (InterruptedException ex) {
+
             }
-            //ejecutar = false;
-        } catch (InterruptedException ex) {}
-            
+        }
+        ejecutar=false;    
+        reset();
+        avisar(Proceso.EVENTO_TIME_OUT);
     }
-    
+           
 }
