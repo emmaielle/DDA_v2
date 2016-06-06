@@ -38,7 +38,7 @@ public class ControladorMesa implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (arg.equals(Modelo.EVENTO_ADD_SECONDS)){
-            vista.mostrarSegundos(Proceso.getSegundos());
+            vista.mostrarSegundos(mesa.buscarRonda(mesa.getUltimaRonda()).getElProceso().getSegundos());
         }
         else if (arg.equals(Modelo.EVENTO_SIN_JUGAR)){
             //vista.mostrarSegundos(Proceso.getSegundos());

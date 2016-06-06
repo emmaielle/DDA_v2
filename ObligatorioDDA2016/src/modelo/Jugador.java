@@ -30,6 +30,10 @@ public class Jugador {
         this.nombreCompleto = nombreCompleto;
         this.saldo = saldo;
     }
+    //agregue para la persistencia ver....
+    public Jugador() {
+    }
+    
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Getters y setters"> 
     public String getNombre() {
@@ -84,6 +88,11 @@ public class Jugador {
 
     public long getSaldo() {
         return saldo;
+    }
+
+    //agregue para la persistencia... ver
+    public void setSaldo(long saldo) {
+        this.saldo = saldo;
     }
 
     public long getTotalCobrado() {
