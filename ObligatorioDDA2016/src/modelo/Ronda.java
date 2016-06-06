@@ -6,8 +6,11 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+
+import java.util.Date;
+
 import java.util.Observer;
+
 
 /**
  *
@@ -21,7 +24,9 @@ public class Ronda implements Observer{
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
     private static int TIEMPO_LIMITE = 1; // minutos
     private final Mesa mesa;
-    private final ArrayList<Proceso> losProcesos = new ArrayList<>();
+    private Date fechaYhoraFin;
+    private final Proceso elProceso = new Proceso();
+
 
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
     public Ronda(int numRonda, Mesa m) {
@@ -31,7 +36,6 @@ public class Ronda implements Observer{
         p.addObserver(this);
         p.reset();
         p.ejecutar();
-        losProcesos.add(p);
     }
     //</editor-fold>
     
@@ -77,6 +81,22 @@ public class Ronda implements Observer{
     }
 
 
+    public Date getFechaYhoraFin() {
+        return fechaYhoraFin;
+    }
+
+    public void setFechaYhoraFin(Date fechaYhoraFin) {
+        this.fechaYhoraFin = fechaYhoraFin;
+    }
+    //agregue para la persistencia
+    public void setNroGanador(int nroGanador) {
+        this.nroGanador = nroGanador;
+    }
+
+    public Proceso getElProceso() {
+        return elProceso;
+    }
+    
     
     
     // </editor-fold>
@@ -89,6 +109,7 @@ public class Ronda implements Observer{
             int randomOut = (int)Math.floor(Math.random()*37);
             nroGanador = randomOut; 
             lookForWinner();
+            this.fechaYhoraFin=new Date();
             return randomOut;
         }
         return nroGanador;
@@ -105,7 +126,7 @@ public class Ronda implements Observer{
     public void apostar(Numero n, int v, JugadorRuleta jugador) { //funciona en ambos sentidos si se clickea de nuevo
         Apuesta yaApostada = buscarApuestaPorNumero(n);
         if (yaApostada == null){ // si entra aca es porque ese numero no fue elegido antes
-            Apuesta a = new Apuesta(v, jugador, n, this, Calendar.getInstance());
+            Apuesta a = new Apuesta(v, jugador, n, this, new Date());
             if (a.validar()){
                 if (!areThereBetsInThisRondaForThisPlayer(jugador)) {
                     jugador.setRondasSinApostarAnterior(jugador.getRondasSinApostar());
@@ -202,12 +223,12 @@ public class Ronda implements Observer{
     }
 
     public void stopProceso() {
-        losProcesos.get(0).parar();
-        losProcesos.remove(0);
+        elProceso.parar();
     }
 
-    void quitarObservador() {
-        losProcesos.get(0).deleteObserver(this);
+
+    public void quitarObservador() {
+        elProceso.deleteObserver(this);
     }
 
 

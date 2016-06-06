@@ -6,7 +6,10 @@
 package mapeadores;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import modelo.Ronda;
 import persistencia.Persistente;
 
@@ -42,37 +45,59 @@ public class MapeadorRonda implements Persistente{
 
     @Override
     public ArrayList<String> getSqlInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> sqls = new ArrayList();
+        sqls.add(
+                "INSERT INTO ronda (oid,fechaYhoraFin,nomMesa,nroSorteado) VALUES " +
+                  "(" + getOid() + ",'" + new Timestamp(r.getFechaYhoraFin().getTime()) + "','" + r.getMesa().getNombre()+
+                  "'," + r.getNroGanador() + ")");
+        return sqls;
     }
 
     @Override
     public ArrayList<String> getSqlUpdate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> sqls = new ArrayList();
+        sqls.add(
+             "UPDATE ronda set fechaYhoraFin='" + new Timestamp(r.getFechaYhoraFin().getTime()) + "'"  +
+               ", nomMesa='" + r.getMesa().getNombre() +"', nroSorteado=" + r.getNroGanador() +
+               " WHERE oid = " + r.getOid());
+        return sqls;
     }
 
     @Override
     public ArrayList<String> getSqlDelete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> sqls = new ArrayList();
+        sqls.add(
+             "DELETE FROM ronda WHERE oid=" + r.getOid());
+        return sqls;
     }
 
     @Override
     public String getSqlSelect() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "SELECT * FROM ronda";
+        if(r!=null) sql+= " where oid=" + getOid();
+        return sql;
     }
 
     @Override
     public void leer(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            r.setOid(rs.getInt("oid"));
+            r.setFechaYhoraFin(new Date(rs.getTimestamp("fechaYhoraFin").getTime()));
+            r.getMesa().setNombre(rs.getString("nomMesa"));
+            r.setNroGanador(rs.getInt("nroGanador"));
+        } catch (SQLException ex) {
+            System.out.println("Error al leer la ronda:" + ex.getMessage());
+        }
     }
 
     @Override
     public void crearNuevo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //r = new Ronda(numRonda, null);
     }
 
     @Override
     public Object getObjeto() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return r;
     }
     
 }
