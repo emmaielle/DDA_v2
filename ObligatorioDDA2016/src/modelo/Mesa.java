@@ -164,8 +164,8 @@ public class Mesa {
         numeros.add(new Numero(35, Color.black));
         numeros.add(new Numero(36, Color.red));
         if (getUltimaRonda() != 0){
-            buscarRonda(getUltimaRonda()).stopProceso();
             buscarRonda(getUltimaRonda()).quitarObservador();
+            buscarRonda(getUltimaRonda()).stopProceso();
         }
         
         Ronda ronda = new Ronda(getUltimaRonda() + 1, this);
