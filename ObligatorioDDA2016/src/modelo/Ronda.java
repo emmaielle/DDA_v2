@@ -25,17 +25,17 @@ public class Ronda implements Observer{
     private static int TIEMPO_LIMITE = 1; // minutos
     private final Mesa mesa;
     private Date fechaYhoraFin;
-    private final Proceso elProceso = new Proceso();
+    private final Proceso elProceso;
 
 
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
     public Ronda(int numRonda, Mesa m) {
         nroRonda = numRonda;
         mesa = m;
-        Proceso p = new Proceso();
-        p.addObserver(this);
-        p.reset();
-        p.ejecutar();
+        elProceso = new Proceso();
+        elProceso.addObserver(this);
+        elProceso.reset();
+        elProceso.ejecutar();
     }
     //</editor-fold>
     

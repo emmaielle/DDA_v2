@@ -8,7 +8,6 @@ package mapeadores;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import modelo.Jugador;
 import persistencia.Persistente;
 

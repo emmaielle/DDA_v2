@@ -49,6 +49,11 @@ public class Modelo extends Observable {
     public void agregar (Jugador j){
         sj.agregar(j);
     }
+    
+    // capaz?
+//    public void cargarJugadores(ArrayList<Object> j){
+//        sj.cargarJugadores(j);
+//    }
 
     public boolean isHabilitado() {
         return sj.isHabilitado();

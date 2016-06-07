@@ -6,7 +6,6 @@
 package mapeadores;
 
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import modelo.Apuesta;
 import persistencia.Persistente;

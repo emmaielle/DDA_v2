@@ -6,8 +6,6 @@
 package modelo;
 
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -15,20 +13,19 @@ import java.util.logging.Logger;
  */
 public class Proceso implements Runnable{
 
-    // Agrgar eventos?
     public static final int EVENTO_ADD_SECONDS = 1;
     public static final int EVENTO_TIME_OUT = 2;
     
     private Thread hilo;
-    private boolean ejecutar;
-    private static int segundos;
+    private boolean ejecutar = false;
+    private int segundos;
     private MiObservable observable = new MiObservable();
     
     public Proceso(){
         
     }
 
-    public static int getSegundos() {
+    public int getSegundos() {
         return segundos;
     }    
     
@@ -44,7 +41,7 @@ public class Proceso implements Runnable{
     }
 
     public void ejecutar(){
-        if(!ejecutar && segundos<10){
+        if(!ejecutar ){
             ejecutar = true;
             hilo = new Thread(this);
             hilo.start();
