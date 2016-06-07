@@ -14,7 +14,6 @@ import modelo.JugadorRuleta;
 import modelo.Mesa;
 import modelo.Modelo;
 import modelo.Numero;
-import modelo.Proceso;
 
 /**
  *

@@ -6,6 +6,7 @@
 package vista;
 
 import java.time.Clock;
+import java.util.ArrayList;
 import mapeadores.MapeadorJugador;
 import modelo.Jugador;
 import modelo.Modelo;
@@ -27,6 +28,12 @@ public class Inicio {
         String pass="";
         BaseDatos bd = BaseDatos.getInstancia();
         bd.conectar(url, user, pass);
+        
+//        MapeadorJugador mapJug = new MapeadorJugador();
+//        ArrayList<Object> jugadores =  bd.obtenerTodos(mapJug);
+//        Modelo m = Modelo.getInstancia();
+//        m.agregar(j);
+
 //        MapeadorJugador map = new MapeadorJugador();
 //        Jugador j = new Jugador("a","a","Juan Perez",1000);
 //        
@@ -81,6 +88,7 @@ public class Inicio {
         
         
         cargarDatos();
+        // cargardatos la tenemos que cambiar por que los traiga de BD
         Principal principal = new Principal();
         principal.setVisible(true);
         principal.setLocationRelativeTo(null);

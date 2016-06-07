@@ -24,16 +24,15 @@ public class Ronda implements Observer{
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
     private static int TIEMPO_LIMITE = 1; // minutos
     private final Mesa mesa;
-
     private Date fechaYhoraFin;
-
-    private final Proceso elProceso = new Proceso();
+    private final Proceso elProceso;
 
 
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
     public Ronda(int numRonda, Mesa m) {
         nroRonda = numRonda;
         mesa = m;
+        elProceso = new Proceso();
         elProceso.addObserver(this);
         elProceso.reset();
         elProceso.ejecutar();
@@ -226,6 +225,7 @@ public class Ronda implements Observer{
     public void stopProceso() {
         elProceso.parar();
     }
+
 
     public void quitarObservador() {
         elProceso.deleteObserver(this);
