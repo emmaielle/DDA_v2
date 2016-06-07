@@ -42,28 +42,34 @@ public class MapeadorApuesta implements Persistente{
 
     @Override
     public ArrayList<String> getSqlInsert() {
-//        ArrayList<String> sqls = new ArrayList();
-//        sqls.add(
-//                "INSERT INTO apuesta (oid,numero,monto,oidjugador,oidronda) VALUES " +
-//                  "(" + getOid() + "," + a.getNumero()+  
-//                  ",'"  +new Timestamp(c.getFecha().getTime()) + "')");
-//        return sqls;
-        return null;
+        ArrayList<String> sqls = new ArrayList();
+        sqls.add(
+                "INSERT INTO apuesta (oid,numero,monto,oidjugador,oidronda) VALUES " +
+                  "(" + getOid() + "," + a.getNumero().getValor()+  
+                  "," +a.getMonto()+","+a.getJugador().getJugador().getOid()+","+a.getRonda().getOid()+")");
+        return sqls;
     }
 
     @Override
     public ArrayList<String> getSqlUpdate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> sqls = new ArrayList();
+        sqls.add("UPDATE apuesta set numero=" + a.getNumero().getValor()+ ", monto=" + a.getMonto()+",oidjugador="+a.getJugador().getJugador().getOid()+ ",oidronda="+a.getRonda().getOid()+"WHERE oid = " + a.getOid());
+        return sqls;
     }
 
     @Override
     public ArrayList<String> getSqlDelete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> sqls = new ArrayList();
+        sqls.add(
+             "DELETE FROM apuesta WHERE oid=" + a.getOid());
+        return sqls;
     }
 
     @Override
     public String getSqlSelect() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "SELECT * FROM apuesta";
+        if(a!=null) sql+= " where oid=" + getOid();
+        return sql;
     }
 
     @Override
@@ -73,12 +79,12 @@ public class MapeadorApuesta implements Persistente{
 
     @Override
     public void crearNuevo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //a = new Apuesta();
     }
 
     @Override
     public Object getObjeto() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return a;
     }
     
 }

@@ -91,6 +91,7 @@ public class Apuesta {
     public boolean validar() {
         return monto > 0 && jugador != null && numero != null; 
     }
+    
     // </editor-fold>
 
     @Override
