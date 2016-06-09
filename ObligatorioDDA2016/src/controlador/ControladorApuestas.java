@@ -30,7 +30,7 @@ public class ControladorApuestas implements Observer{
     }
 
     public ArrayList<Apuesta> cargarApuestas() {
-        return jr.getApuestas();
+        return jr.getJugador().getApuestas();
     }
 
     public ArrayList<Apuesta> cargarApuestasPorRonda(Apuesta a) {

@@ -294,7 +294,7 @@ public class Mesa {
         Ronda ultRonda = buscarRonda(getUltimaRonda());
         for (JugadorRuleta jr : jugadoresMesa){
             boolean haApostado = false;
-            for (Apuesta a: jr.getApuestas()){
+            for (Apuesta a: jr.getJugador().getApuestas()){
                 if (a.getRonda().equals(ultRonda)) haApostado = true;
             }
             if (!haApostado) jr.setRondasSinApostar(jr.getRondasSinApostar() + 1);

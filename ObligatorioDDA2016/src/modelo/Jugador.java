@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.ArrayList;
+
 
 /**
  *
@@ -21,6 +23,7 @@ public class Jugador {
     private boolean enJuego;
     private boolean enMesa;
     private boolean statsOn;
+    private ArrayList<Apuesta> apuestas = new ArrayList<>();
     
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
     
@@ -118,7 +121,9 @@ public class Jugador {
     public void setOid(int oid) {
         this.oid = oid;
     }
- 
+    public ArrayList<Apuesta> getApuestas() {
+        return apuestas;
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Metodos"> 

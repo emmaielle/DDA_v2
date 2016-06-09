@@ -40,7 +40,7 @@ public class VistaMesaV1 extends javax.swing.JDialog implements VistaMesa, Actio
         top = new PanelDatos(controlador);
         split.setTopComponent(top);
         split.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        split.setDividerLocation(180);
+        split.setDividerLocation(250);
         setContentPane(split);
         controlador.cargarJugadoresActivos();
         controlador.buscarNumeroActual();
@@ -82,7 +82,7 @@ public class VistaMesaV1 extends javax.swing.JDialog implements VistaMesa, Actio
     public void mostrar(ArrayList<Numero> numeros) {
         bottom = new PanelTablero(numeros,this);
         split.setBottomComponent(bottom);
-        split.setDividerLocation(180);
+        split.setDividerLocation(250);
         validate();
     }
 
