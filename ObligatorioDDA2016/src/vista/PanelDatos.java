@@ -49,6 +49,10 @@ public class PanelDatos extends javax.swing.JPanel {
         lbl_color = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         lbl_tiempo = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
 
         setLayout(null);
 
@@ -136,6 +140,23 @@ public class PanelDatos extends javax.swing.JPanel {
         lbl_tiempo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         add(lbl_tiempo);
         lbl_tiempo.setBounds(514, 4, 50, 30);
+
+        jLabel6.setText("Apostar Docena: ");
+        add(jLabel6);
+        jLabel6.setBounds(10, 200, 100, 14);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "1 - 12", "13 - 24", "25-36" }));
+        jComboBox1.setToolTipText("");
+        add(jComboBox1);
+        jComboBox1.setBounds(120, 190, 100, 20);
+
+        jLabel7.setText("Apostar Color :");
+        add(jLabel7);
+        jLabel7.setBounds(10, 240, 90, 14);
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Rojo", "Negro" }));
+        add(jComboBox2);
+        jComboBox2.setBounds(120, 230, 100, 20);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_finalizarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarAActionPerformed
@@ -159,11 +180,15 @@ public class PanelDatos extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_finalizarA;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_color;
     private javax.swing.JLabel lbl_mensajes;
