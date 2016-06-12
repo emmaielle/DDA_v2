@@ -194,7 +194,7 @@ public class Ronda implements Observer{
             }
         }
     }
-
+    
     public long totalApostadoRonda(JugadorRuleta j){
         long total = 0;
         for(Apuesta a:apuestas){
@@ -202,7 +202,6 @@ public class Ronda implements Observer{
         }
         return total;
     }
-    // </editor-fold>
 
     public boolean areThereBetsInThisRondaForThisPlayer(JugadorRuleta jugador) {
         for (Apuesta a : apuestas){
@@ -210,6 +209,7 @@ public class Ronda implements Observer{
         }
         return false;
     }
+    // </editor-fold>
 
     @Override
     public void update(java.util.Observable o, Object arg) {

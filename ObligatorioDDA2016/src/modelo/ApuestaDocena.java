@@ -19,8 +19,9 @@ public class ApuestaDocena extends Apuesta {
         super(monto, jugador, numero, ronda, fechaHora);
     }
  
-	public int montoGanado() {
-		return 0;
-	}
+    
+    public int montoGanado() {
+        return 0;
+    }
 	 
 }
