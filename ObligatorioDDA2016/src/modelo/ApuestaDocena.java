@@ -20,8 +20,6 @@ public class ApuestaDocena extends Apuesta {
     }
  
     
-    public int montoGanado() {
-        return 0;
-    }
+    
 	 
 }

@@ -53,7 +53,7 @@ public class MapeadorJugador implements Persistente {
     @Override
     public ArrayList<String> getSqlUpdate() {
         ArrayList<String> sqls = new ArrayList();
-        sqls.add("UPDATE usuario set nombre='" + j.getNombre() + "', password='" + j.getPassword()+"',saldo="+j.getSaldo()+ ",nombreUsuario='"+j.getNombreCompleto()+"WHERE oid = " + j.getOid());
+        sqls.add("UPDATE usuario set nombre='" + j.getNombre() + "', password='" + j.getPassword()+"',saldo="+j.getSaldo()+ ",nombreUsuario='"+j.getNombreCompleto()+"' WHERE oid = " + j.getOid());
         return sqls;
     }
     
@@ -74,6 +74,7 @@ public class MapeadorJugador implements Persistente {
         try {
             j.setOid(rs.getInt("oid"));
             j.setNombre(rs.getString("nombre"));
+            j.setPassword(rs.getString("password"));
             j.setNombreCompleto(rs.getString("nombreUsuario"));
             j.setSaldo(rs.getInt("saldo"));
         } catch (SQLException ex) {
