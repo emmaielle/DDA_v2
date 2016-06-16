@@ -8,6 +8,9 @@ package modelo;
 import exceptions.InvalidUserActionException;
 import java.awt.Color;
 import java.util.ArrayList;
+import mapeadores.MapeadorJugador;
+import mapeadores.MapeadorRonda;
+import persistencia.BaseDatos;
 
 /**
  *
@@ -208,6 +211,7 @@ public class Mesa {
         int nro = ultimaRonda.sortearNroGanador(); 
         // reviso resultados // aviso ganadores // reparto plata // guardo historial
         ultimaRonda.modificarSaldos();
+        persistencia();
         nuevaRonda();
         Modelo.getInstancia().avisar(Modelo.EVENTO_SORTEARNUMERO);
         return nro;
@@ -324,6 +328,43 @@ public class Mesa {
         return nombre.equalsIgnoreCase(m.getNombre());
     }
      // </editor-fold>
+
+    private void persistencia() {
+        String url="jdbc:mysql://localhost/obligatoriodda2016";
+        String user="root";
+        String pass="";
+        BaseDatos bd = BaseDatos.getInstancia();
+        bd.conectar(url, user, pass);
+        for(JugadorRuleta jr:jugadoresMesa){
+            persistoJugador(jr, bd);
+            persistoRonda(jr,bd);
+            
+            
+            //System.out.println(j);
+
+            
+        }
+        
+        bd.desconectar();
+
+    }
+
+    private void persistoJugador(JugadorRuleta jr, BaseDatos bd) {
+        MapeadorJugador map = new MapeadorJugador();
+        ArrayList jugadores = bd.consultar(map, "where oid = "+jr.getJugador().getOid());
+        Jugador j = (Jugador) jugadores.get(0);
+        map.setJ(j);
+        j.setSaldo(jr.getJugador().getSaldo());
+        bd.guardar(map);
+    }
+
+    private void persistoRonda(JugadorRuleta jr, BaseDatos bd) {
+        MapeadorRonda mapR = new MapeadorRonda();
+        mapR.setR(this.buscarRonda(this.getUltimaRonda()));
+        bd.guardar(mapR);
+    }
+
+    
 
 
 

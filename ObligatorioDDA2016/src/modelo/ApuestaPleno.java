@@ -5,18 +5,16 @@ import java.util.Date;
 
 
 public class ApuestaPleno extends Apuesta {
- 
-	private Numero numeroTablero;
-	 
-	private Numero numero;
-
-    public ApuestaPleno(int monto, JugadorRuleta jugador, Numero numero, Ronda ronda, Date fechaHora) {
+    
+    private Numero numeroTablero;
+    
+    public ApuestaPleno(int monto, JugadorRuleta jugador, Numero numero, Ronda ronda, Date fechaHora, Numero numTablero) {
         super(monto, jugador, numero, ronda, fechaHora);
+    this.numeroTablero=numTablero;
     }
 	 
-	public int montoGanado() {
-		return 0;
-	}
-	 
+    public boolean validar(){
+        return numeroTablero!=null;
+    }
 }
  
