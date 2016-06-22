@@ -17,9 +17,7 @@ public class ApuestaColor extends Apuesta {
         super(monto, jugador, numero, ronda, fechaHora);
     }
  
-    public int montoGanado() {
-            return 0;
-    }
+    
 	 
 }
  

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import modelo.Apuesta;
 import modelo.Ronda;
 import persistencia.Persistente;
 
@@ -50,6 +51,7 @@ public class MapeadorRonda implements Persistente{
                 "INSERT INTO ronda (oid,fechaYhoraFin,nomMesa,nroSorteado) VALUES " +
                   "(" + getOid() + ",'" + new Timestamp(r.getFechaYhoraFin().getTime()) + "','" + r.getMesa().getNombre()+
                   "'," + r.getNroGanador() + ")");
+        agregarApuestas(sqls);
         return sqls;
     }
 
@@ -98,6 +100,14 @@ public class MapeadorRonda implements Persistente{
     @Override
     public Object getObjeto() {
         return r;
+    }
+
+    private void agregarApuestas(ArrayList<String> sqls) {
+        ArrayList<Apuesta> apuestas = r.getApuestas();
+        for(Apuesta a:apuestas){
+            sqls.add("INSERT INTO apuesta (oidRonda,numero,monto,oidJugador) values ("+getOid()+","
+                    +a.getNumero().getValor()+","+a.getMonto()+","+a.getJugador().getJugador().getOid()+")");
+        }
     }
     
 }

@@ -5,16 +5,10 @@
         <group>
             <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/modelo/Ronda.java</file>
             <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/modelo/JugadorRuleta.java</file>
+            <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/modelo/ApuestaPleno.java</file>
             <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/modelo/Apuesta.java</file>
-            <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/modelo/Proceso.java</file>
-            <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/modelo/Jugador.java</file>
-            <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/vista/VistaEstadisticasV1.java</file>
-            <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/vista/VistaApuestasV1.java</file>
-            <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/vista/PanelTablero.java</file>
-            <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/vista/PanelDatos.java</file>
-            <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/controlador/ControladorApuestas.java</file>
+            <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/modelo/Numero.java</file>
             <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/modelo/Mesa.java</file>
-            <file>file:/C:/Users/Euge/Desktop/Obligatorio2/ObligatorioDDA2016/src/vista/VistaMesaV1.java</file>
         </group>
     </open-files>
 </project-private>
