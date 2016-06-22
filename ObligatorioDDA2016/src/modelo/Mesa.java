@@ -285,7 +285,9 @@ public class Mesa {
         if(cantFinalizados == jugadoresMesa.size() || cantFinalizados == jugadoresMesa.size() + 1){ 
             yaApostado(false);
             sumarRondaSinApostar();
-            return sortearNumeroGanador();
+            int nroGan =  sortearNumeroGanador();
+            persistir();
+            return nroGan;
         }
         else return -1;
     }
@@ -324,6 +326,11 @@ public class Mesa {
         return nombre.equalsIgnoreCase(m.getNombre());
     }
      // </editor-fold>
+
+    private void persistir() {
+
+        
+    }
 
 
 
