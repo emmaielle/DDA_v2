@@ -6,6 +6,7 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -144,6 +145,11 @@ public class Jugador {
     }
     
     // </editor-fold>
+
+    public void agregar(String string, int aInt, int aInt0, Date date, String string0, int aInt1) {
+        if(string.contains("pleno"))
+            apuestas.add(new ApuestaPleno(aInt, null, string, null, null, date));
+    }
 
 
 
