@@ -65,8 +65,8 @@ public class ControladorMesa implements Observer {
             vista.mostrarSaldo(jugador.getJugador().getSaldo());
     }
     
-    public void apostar(Numero n, String v) throws InvalidUserActionException { 
-        modelo.apostar(mesa, n, v, jugador);
+    public void apostar(String numero, Numero n, String v) throws InvalidUserActionException { 
+        modelo.apostar(numero, mesa, n, v, jugador);
         vista.exitoApuesta();   
     }
 
@@ -76,7 +76,7 @@ public class ControladorMesa implements Observer {
     }
 
     public void buscarNumeroActual() {
-        mostrarNumeroSorteado(modelo.ultNumeroSorteado(mesa));
+        mostrarNumeroSorteado(modelo.ultNumeroSorteado(mesa).getValor());
     }
     
     private void mostrarNumeroSorteado(int i){
@@ -88,8 +88,8 @@ public class ControladorMesa implements Observer {
     }
 
     public void finalizarApuesta()  { 
-        int sorteado = modelo.finalizarApuesta(mesa, jugador);
-        if(sorteado!= -1){
+        Numero sorteado = modelo.finalizarApuesta(mesa, jugador);
+        if(sorteado!= null){
             vista.habilitar(true);
             mesa.avisarCheckSaldo();
         }
@@ -122,5 +122,9 @@ public class ControladorMesa implements Observer {
     
     public void echarDeMesaPorNoJugar(){
         if (jugador.sinApostarTresVeces()) vista.cerrarVentana("Ha pasado 3 rondas sin apostar");
+    }
+
+    public void desapostar(String tipo) throws InvalidUserActionException{
+        mesa.desapostar(tipo, jugador);
     }
 }

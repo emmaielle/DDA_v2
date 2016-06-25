@@ -44,7 +44,7 @@ public class MapeadorApuesta implements Persistente{
         ArrayList<String> sqls = new ArrayList();
         sqls.add(
                 "INSERT INTO apuesta (oid,numero,monto,oidjugador,oidronda) VALUES " +
-                  "(" + getOid() + "," + a.getNumero().getValor()+  
+                  "(" + getOid() + "," + a.getNumero()+  
                   "," +a.getMonto()+","+a.getJugador().getJugador().getOid()+","+a.getRonda().getOid()+")");
         return sqls;
     }
@@ -52,7 +52,7 @@ public class MapeadorApuesta implements Persistente{
     @Override
     public ArrayList<String> getSqlUpdate() {
         ArrayList<String> sqls = new ArrayList();
-        sqls.add("UPDATE apuesta set numero=" + a.getNumero().getValor()+ ", monto=" + a.getMonto()+",oidjugador="+a.getJugador().getJugador().getOid()+ ",oidronda="+a.getRonda().getOid()+"WHERE oid = " + a.getOid());
+        sqls.add("UPDATE apuesta set numero=" + a.getNumero()+ ", monto=" + a.getMonto()+",oidjugador="+a.getJugador().getJugador().getOid()+ ",oidronda="+a.getRonda().getOid()+"WHERE oid = " + a.getOid());
         return sqls;
     }
 

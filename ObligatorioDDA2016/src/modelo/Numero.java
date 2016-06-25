@@ -15,11 +15,18 @@ public class Numero {
     private int valor;
     private Color color; // el color por defecto
     private Apuesta apuesta;
+    private int docena;
 
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
     public Numero(int valor, Color color) {
         this.valor = valor;
         this.color = color;
+        setDocena(valor);
+    }
+    
+    public Numero(int valor){
+        this.valor = valor;
+        setDocena(valor);
     }
     //</editor-fold>
     
@@ -47,6 +54,13 @@ public class Numero {
     public void setApuesta(Apuesta apuesta) {
         this.apuesta = apuesta;
     }
+
+    public int getDocena() {
+        return this.docena;
+    }
+    
+    
+    
     // </editor-fold>
 
     @Override
@@ -54,6 +68,12 @@ public class Numero {
         String j = "Sin marcar";
         if(apuesta!=null) j=apuesta.getJugador().getJugador().getNombreCompleto();
         return "Numero{" + "valor=" + valor + ", usuario=" + j + '}';
+    }
+
+    private void setDocena(int valor) {
+        if (valor <= 12) this.docena = 1;
+        else if (valor <= 24) this.docena = 2;
+        else this.docena = 3;
     }
     
     

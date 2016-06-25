@@ -63,7 +63,7 @@ public class Proceso implements Runnable{
     
     @Override
     public void run() {
-        for (;segundos< Ronda.getTIEMPO_LIMITE()*10&&ejecutar;segundos++){
+        for (;segundos< Ronda.getTIEMPO_LIMITE()*60&&ejecutar;segundos++){
             avisar(Proceso.EVENTO_ADD_SECONDS);
             try {
                 hilo.sleep(1000);               

@@ -9,6 +9,8 @@ import controlador.ControladorMesa;
 import exceptions.InvalidUserActionException;
 import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 import modelo.JugadorRuleta;
 
 /**
@@ -50,9 +52,12 @@ public class PanelDatos extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         lbl_tiempo = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        unoDoce = new javax.swing.JToggleButton();
+        treceVeinticuatro = new javax.swing.JToggleButton();
+        veinticincoTreintayseis = new javax.swing.JToggleButton();
+        rojo = new javax.swing.JToggleButton();
+        negro = new javax.swing.JToggleButton();
 
         setLayout(null);
 
@@ -145,18 +150,54 @@ public class PanelDatos extends javax.swing.JPanel {
         add(jLabel6);
         jLabel6.setBounds(10, 200, 100, 14);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "1 - 12", "13 - 24", "25-36" }));
-        jComboBox1.setToolTipText("");
-        add(jComboBox1);
-        jComboBox1.setBounds(120, 190, 100, 20);
-
         jLabel7.setText("Apostar Color :");
         add(jLabel7);
         jLabel7.setBounds(10, 240, 90, 14);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Rojo", "Negro" }));
-        add(jComboBox2);
-        jComboBox2.setBounds(120, 230, 100, 20);
+        unoDoce.setText("1-12");
+        unoDoce.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unoDoceActionPerformed(evt);
+            }
+        });
+        add(unoDoce);
+        unoDoce.setBounds(100, 190, 70, 23);
+
+        treceVeinticuatro.setText("13-24");
+        treceVeinticuatro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                treceVeinticuatroActionPerformed(evt);
+            }
+        });
+        add(treceVeinticuatro);
+        treceVeinticuatro.setBounds(170, 190, 70, 23);
+
+        veinticincoTreintayseis.setText("25-36");
+        veinticincoTreintayseis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                veinticincoTreintayseisActionPerformed(evt);
+            }
+        });
+        add(veinticincoTreintayseis);
+        veinticincoTreintayseis.setBounds(240, 190, 70, 23);
+
+        rojo.setText("ROJO");
+        rojo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rojoActionPerformed(evt);
+            }
+        });
+        add(rojo);
+        rojo.setBounds(100, 230, 110, 23);
+
+        negro.setText("NEGRO");
+        negro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                negroActionPerformed(evt);
+            }
+        });
+        add(negro);
+        negro.setBounds(210, 230, 100, 23);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_finalizarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarAActionPerformed
@@ -176,12 +217,30 @@ public class PanelDatos extends javax.swing.JPanel {
         controlador.verApuestas();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void unoDoceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unoDoceActionPerformed
+        apostarToggle("Docena 1", unoDoce.isSelected(), unoDoce);
+    }//GEN-LAST:event_unoDoceActionPerformed
+
+    private void treceVeinticuatroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_treceVeinticuatroActionPerformed
+        apostarToggle("Docena 2", treceVeinticuatro.isSelected(), treceVeinticuatro);
+    }//GEN-LAST:event_treceVeinticuatroActionPerformed
+
+    private void veinticincoTreintayseisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_veinticincoTreintayseisActionPerformed
+        apostarToggle("Docena 3", veinticincoTreintayseis.isSelected(), veinticincoTreintayseis);
+    }//GEN-LAST:event_veinticincoTreintayseisActionPerformed
+
+    private void rojoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rojoActionPerformed
+        apostarToggle("Color rojo", rojo.isSelected(), rojo);
+    }//GEN-LAST:event_rojoActionPerformed
+
+    private void negroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negroActionPerformed
+        apostarToggle("Color negro", negro.isSelected(), negro);
+    }//GEN-LAST:event_negroActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_finalizarA;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -199,8 +258,13 @@ public class PanelDatos extends javax.swing.JPanel {
     private javax.swing.JLabel lbl_total_apostado;
     private javax.swing.JLabel lbl_total_apostado1;
     private javax.swing.JList listaJugadores;
+    private javax.swing.JToggleButton negro;
     private javax.swing.JLabel nroSorteado;
+    private javax.swing.JToggleButton rojo;
+    private javax.swing.JToggleButton treceVeinticuatro;
     private javax.swing.JTextField txt_valorApuesta;
+    private javax.swing.JToggleButton unoDoce;
+    private javax.swing.JToggleButton veinticincoTreintayseis;
     // End of variables declaration//GEN-END:variables
     
     public void mostrarJugadores(ArrayList<JugadorRuleta> j) {
@@ -259,6 +323,24 @@ public class PanelDatos extends javax.swing.JPanel {
 
     public void mostrarSegundos(int i) {
         lbl_tiempo.setText(i + "");   
+    }
+
+    private void apostarToggle(String tipo, boolean apostar, JToggleButton button) {
+         try{
+            if (apostar){
+                String sMonto = obtenerApuesta();
+                controlador.apostar(tipo, null, sMonto); 
+            }
+            else controlador.desapostar(tipo);
+        }
+        catch (InvalidUserActionException ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+            toggleButton(button);
+        }
+    }
+
+    private void toggleButton(JToggleButton button) {
+        if (button.isSelected()) button.setSelected(!button.isSelected());
     }
 
 }

@@ -13,11 +13,27 @@ import java.util.Date;
  */
 public class ApuestaColor extends Apuesta {
 
-    public ApuestaColor(int monto, JugadorRuleta jugador, Numero numero, Ronda ronda, Date fechaHora) {
-        super(monto, jugador, numero, ronda, fechaHora);
+    private static final int COEFICIENTE_PAGO = 2;
+    
+    public ApuestaColor(int monto, JugadorRuleta jugador, String sNumero, Ronda ronda, Date fechaHora) {
+        super(monto, jugador, sNumero, ronda, fechaHora);
+    }
+
+    @Override
+    public int getCoeficientePago() {
+        return COEFICIENTE_PAGO;
     }
  
-    
+    @Override
+    public String getTipo() {
+        return "Color";
+    }
+
+    @Override
+    public boolean esGanadora(Numero numero) {
+        String color = super.getNumero().split(" ")[1];
+        return numero.getColor().toString().equals(color); //check
+    }
 	 
 }
  
