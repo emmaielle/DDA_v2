@@ -13,9 +13,11 @@ import java.util.Date;
  */
 public class ApuestaColor extends Apuesta {
 
-    public ApuestaColor(int monto, JugadorRuleta jugador, Numero numero, Ronda ronda, Date fechaHora) {
-        super(monto, jugador, numero, ronda, fechaHora);
+    public ApuestaColor(int monto, JugadorRuleta jugador, Numero numero, String num, Ronda ronda, Date fechaHora) {
+        super(monto, jugador, numero, num, ronda, fechaHora);
     }
+
+     
  
     
 	 

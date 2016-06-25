@@ -337,12 +337,8 @@ public class Mesa {
         bd.conectar(url, user, pass);
         for(JugadorRuleta jr:jugadoresMesa){
             persistoJugador(jr, bd);
-            persistoRonda(jr,bd);
-            
-            
+            persistoRonda(jr,bd);            
             //System.out.println(j);
-
-            
         }
         
         bd.desconectar();

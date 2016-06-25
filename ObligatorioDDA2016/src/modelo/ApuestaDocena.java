@@ -15,9 +15,11 @@ import java.util.Date;
  */
 public class ApuestaDocena extends Apuesta {
 
-    public ApuestaDocena(int monto, JugadorRuleta jugador, Numero numero, Ronda ronda, Date fechaHora) {
-        super(monto, jugador, numero, ronda, fechaHora);
+    public ApuestaDocena(int monto, JugadorRuleta jugador, Numero numero, String num, Ronda ronda, Date fechaHora) {
+        super(monto, jugador, numero, num, ronda, fechaHora);
     }
+
+    
  
     
     

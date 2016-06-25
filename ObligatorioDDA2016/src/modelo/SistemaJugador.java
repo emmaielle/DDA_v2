@@ -8,6 +8,7 @@ package modelo;
 import exceptions.InvalidUserActionException;
 import java.util.ArrayList;
 import mapeadores.MapeadorJugador;
+import mapeadores.MapeadorRonda;
 import persistencia.BaseDatos;
 
 /**
@@ -159,7 +160,8 @@ public class SistemaJugador {
         bd.conectar(url, user, pass);
         MapeadorJugador map = new MapeadorJugador();
         ArrayList juga = bd.obtenerTodos(map);
-        //bd.obtenerTodos(map);
+        
+        int prueba = 0;
         for(Object o:juga){
             Jugador ju = (Jugador)o;
             ju.setSaldo(1000);
@@ -167,9 +169,15 @@ public class SistemaJugador {
             bd.guardar(map);
             jugadores.add(ju);
         }
-        
+        MapeadorRonda map2 = new MapeadorRonda();
+       // ArrayList rondas = bd.obtenerTodos(map2);
+//        for(Object ob: rondas){
+//            Ronda r = (Ronda) ob;
+//            
+//        }
         bd.desconectar();
 
     }
+    
     
 }

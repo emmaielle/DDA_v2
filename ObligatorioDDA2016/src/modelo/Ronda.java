@@ -126,7 +126,7 @@ public class Ronda implements Observer{
     public void apostar(Numero n, int v, JugadorRuleta jugador) { //funciona en ambos sentidos si se clickea de nuevo
         Apuesta yaApostada = buscarApuestaPorNumero(n);
         if (yaApostada == null){ // si entra aca es porque ese numero no fue elegido antes
-            Apuesta a = new Apuesta(v, jugador, n, this, new Date());
+            ApuestaPleno a = new ApuestaPleno(v, jugador, n,String.valueOf(n.getValor()), this, new Date());
             if (a.validar()){
                 if (!areThereBetsInThisRondaForThisPlayer(jugador)) {
                     jugador.setRondasSinApostarAnterior(jugador.getRondasSinApostar());
@@ -157,11 +157,21 @@ public class Ronda implements Observer{
     }
     
     public void agregarApuesta(Apuesta a){
-        a.getNumero().setApuesta(a);
+        if(a.getNum()=="docena"){
+        }
+        else if(a.getNum()=="color"){
+        }
+        else{
+            a.getNumero().setApuesta(a);
+        }
         a.getJugador().agregarApuesta(a);
         apuestas.add(a);
         Modelo.getInstancia().avisar(Modelo.EVENTO_TABLERO);
     }
+    public void agregar(String numero, int monto,int oidJugador){
+        apuestas.add(new Apuesta(monto, null, null, numero, this, fechaYhoraFin));
+    }
+
 
     private void lookForWinner() {
         for (Apuesta a : apuestas){

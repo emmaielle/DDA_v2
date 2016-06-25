@@ -62,6 +62,8 @@ public class MapeadorRonda implements Persistente{
              "UPDATE ronda set fechaYhoraFin='" + new Timestamp(r.getFechaYhoraFin().getTime()) + "'"  +
                ", nomMesa='" + r.getMesa().getNombre() +"', nroSorteado=" + r.getNroGanador() +
                " WHERE oid = " + r.getOid());
+        sqls.add("delete from apuesta where oid="+r.getOid());
+        agregarApuestas(sqls);
         return sqls;
     }
 
@@ -70,13 +72,16 @@ public class MapeadorRonda implements Persistente{
         ArrayList<String> sqls = new ArrayList();
         sqls.add(
              "DELETE FROM ronda WHERE oid=" + r.getOid());
+        sqls.add("delete from apuesta where oid="+r.getOid());
         return sqls;
     }
 
     @Override
     public String getSqlSelect() {
-        String sql = "SELECT * FROM ronda";
-        if(r!=null) sql+= " where oid=" + getOid();
+        
+        String sql = "SELECT * FROM ronda r, apuesta a WHERE r.oid=a.oidRonda";
+        if(r!=null) sql+= " AND r.oid=" + getOid();
+        sql+=" ORDER BY r.oid";
         return sql;
     }
 
@@ -87,6 +92,7 @@ public class MapeadorRonda implements Persistente{
             r.setFechaYhoraFin(new Date(rs.getTimestamp("fechaYhoraFin").getTime()));
             r.getMesa().setNombre(rs.getString("nomMesa"));
             r.setNroGanador(rs.getInt("nroGanador"));
+            
         } catch (SQLException ex) {
             System.out.println("Error al leer la ronda:" + ex.getMessage());
         }

@@ -15,10 +15,9 @@ import persistencia.Persistente;
  * @author Euge
  */
 public class MapeadorApuesta implements Persistente{
-    Apuesta a;
-
+    private Apuesta a;
     public MapeadorApuesta() {
-    }
+}
 
     public MapeadorApuesta(Apuesta a) {
         this.a = a;
@@ -43,9 +42,9 @@ public class MapeadorApuesta implements Persistente{
     public ArrayList<String> getSqlInsert() {
         ArrayList<String> sqls = new ArrayList();
         sqls.add(
-                "INSERT INTO apuesta (oid,numero,monto,oidjugador,oidronda) VALUES " +
-                  "(" + getOid() + "," + a.getNumero().getValor()+  
-                  "," +a.getMonto()+","+a.getJugador().getJugador().getOid()+","+a.getRonda().getOid()+")");
+                "INSERT INTO apuesta (oidronda,numero,monto,oidjugador) VALUES " +
+                  "(" + a.getRonda().getOid() + "," + a.getNumero().getValor()+  
+                  "," +a.getMonto()+","+a.getJugador().getJugador().getOid()+")");
         return sqls;
     }
 

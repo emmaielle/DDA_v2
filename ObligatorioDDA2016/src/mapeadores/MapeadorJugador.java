@@ -16,7 +16,7 @@ import persistencia.Persistente;
  * @author Euge
  */
 public class MapeadorJugador implements Persistente {
-    Jugador j;
+    private Jugador j;
 
     public MapeadorJugador() {
     }
@@ -64,7 +64,9 @@ public class MapeadorJugador implements Persistente {
 
     @Override
     public String getSqlSelect() {
-        String sql = "SELECT * FROM usuario";
+        String sql = "SELECT * FROM  usuario ";
+        // u LEFT JOIN apuesta a ON u.oid=a.oidJugador LEFT JOIN ronda r ON a.oidRonda=r.oid
+        
         if(j!=null) sql+= " where oid=" + getOid();
         return sql;
     }
