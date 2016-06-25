@@ -13,7 +13,6 @@ import java.util.Date;
  */
 public class ApuestaColor extends Apuesta {
 
-
     private static final int COEFICIENTE_PAGO = 2;
     
     public ApuestaColor(int monto, JugadorRuleta jugador, String sNumero, Ronda ronda, Date fechaHora) {
@@ -23,10 +22,7 @@ public class ApuestaColor extends Apuesta {
     @Override
     public int getCoeficientePago() {
         return COEFICIENTE_PAGO;
-
     }
-
-     
  
     @Override
     public String getTipo() {

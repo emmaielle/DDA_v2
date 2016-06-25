@@ -104,6 +104,7 @@ public class Ronda implements Observer{
     
     // sortea si no existe, sino devuelve existente
     public Numero sortearNroGanador() {
+        
         if (nroGanador == null){ // todavia no se sorteo
             int randomOut = (int)Math.floor(Math.random()*37);
             Numero tablero = mesa.buscarNumeroEnTablero(randomOut);
@@ -184,7 +185,6 @@ public class Ronda implements Observer{
     
     // unico para el pleno 
     public void agregarApuesta(Apuesta a){
-
         if (a instanceof ApuestaPleno){
             ((ApuestaPleno)a).getNumeroTablero().setApuesta(a);
         }
@@ -192,7 +192,6 @@ public class Ronda implements Observer{
         apuestas.add(a);
         Modelo.getInstancia().avisar(Modelo.EVENTO_TABLERO);
     }
-
 
     private void lookForWinner() {
         for (Apuesta a : apuestas){

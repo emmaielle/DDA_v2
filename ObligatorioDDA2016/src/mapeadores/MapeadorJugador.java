@@ -8,6 +8,7 @@ package mapeadores;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import modelo.Jugador;
 import persistencia.Persistente;
 
@@ -16,7 +17,7 @@ import persistencia.Persistente;
  * @author Euge
  */
 public class MapeadorJugador implements Persistente {
-    private Jugador j;
+    Jugador j;
 
     public MapeadorJugador() {
     }
@@ -64,9 +65,7 @@ public class MapeadorJugador implements Persistente {
 
     @Override
     public String getSqlSelect() {
-        String sql = "SELECT * FROM  usuario ";
-        // u LEFT JOIN apuesta a ON u.oid=a.oidJugador LEFT JOIN ronda r ON a.oidRonda=r.oid
-        
+        String sql = "SELECT * FROM usuario";
         if(j!=null) sql+= " where oid=" + getOid();
         return sql;
     }
@@ -79,6 +78,7 @@ public class MapeadorJugador implements Persistente {
             j.setPassword(rs.getString("password"));
             j.setNombreCompleto(rs.getString("nombreUsuario"));
             j.setSaldo(rs.getInt("saldo"));
+            j.agregar(rs.getString("numero"),rs.getInt("monto"),rs.getInt("oidRonda"),new Date(rs.getTimestamp("fecha").getTime()),rs.getString("nomMesa"),rs.getInt("nroSorteado"));
         } catch (SQLException ex) {
             System.out.println("Error al leer usuario:" + ex.getMessage());
         }

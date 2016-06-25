@@ -23,7 +23,6 @@ public abstract class Apuesta {
 
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
-
     public Apuesta(int monto, JugadorRuleta jugador, String sNumero, Ronda ronda, Date fechaHora) {
         this.monto = monto;
         this.jugador = jugador;
@@ -106,7 +105,6 @@ public abstract class Apuesta {
                     sdf1.format(this.getFechaHora().getTime())
                     + "; Numero: " + this.getNumero() + 
                     "; Monto ganado: " + this.getMontoGanado();
-
     }
 
     public abstract String getTipo();

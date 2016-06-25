@@ -63,8 +63,6 @@ public class MapeadorRonda implements Persistente{
              "UPDATE ronda set fechaYhoraFin='" + new Timestamp(r.getFechaYhoraFin().getTime()) + "'"  +
                ", nomMesa='" + r.getMesa().getNombre() +"', nroSorteado=" + r.getNroGanador() +
                " WHERE oid = " + r.getOid());
-        sqls.add("delete from apuesta where oid="+r.getOid());
-        agregarApuestas(sqls);
         return sqls;
     }
 
@@ -73,16 +71,13 @@ public class MapeadorRonda implements Persistente{
         ArrayList<String> sqls = new ArrayList();
         sqls.add(
              "DELETE FROM ronda WHERE oid=" + r.getOid());
-        sqls.add("delete from apuesta where oid="+r.getOid());
         return sqls;
     }
 
     @Override
     public String getSqlSelect() {
-        
-        String sql = "SELECT * FROM ronda r, apuesta a WHERE r.oid=a.oidRonda";
-        if(r!=null) sql+= " AND r.oid=" + getOid();
-        sql+=" ORDER BY r.oid";
+        String sql = "SELECT * FROM ronda";
+        if(r!=null) sql+= " where oid=" + getOid();
         return sql;
     }
 
@@ -91,11 +86,9 @@ public class MapeadorRonda implements Persistente{
         try {
             r.setOid(rs.getInt("oid"));
             r.setFechaYhoraFin(new Date(rs.getTimestamp("fechaYhoraFin").getTime()));
-
             r.getMesa().setNombre(rs.getString("nomMesa")); // esto va a estar mal creo
             int valor = Integer.getInteger(rs.getString("nroGanador"));
             r.setNroGanador(new Numero(valor));
-
         } catch (SQLException ex) {
             System.out.println("Error al leer la ronda:" + ex.getMessage());
         }

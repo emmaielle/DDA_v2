@@ -298,11 +298,8 @@ public class Mesa {
         if(cantFinalizados == jugadoresMesa.size() || cantFinalizados == jugadoresMesa.size() + 1){ 
             yaApostado(false);
             sumarRondaSinApostar();
-
             Numero nroGan =  sortearNumeroGanador();
-            persistencia();
             return nroGan;
-
         }
         else return null;
     }
@@ -342,6 +339,8 @@ public class Mesa {
     }
      // </editor-fold>
 
+
+
     private void persistencia() {
         String url="jdbc:mysql://localhost/obligatoriodda2016";
         String user="root";
@@ -371,14 +370,17 @@ public class Mesa {
         bd.guardar(mapR);
     }
 
-
-    Numero buscarNumeroEnTablero(int randomOut) {
+    public Numero buscarNumeroEnTablero(int randomOut) {
         ArrayList<Numero> nums = this.getNumeros();
         for (Numero n: nums){
             if (n.getValor() == randomOut) return n;
         }
         return null;
     }
+
+
+
+   
 
    
 }

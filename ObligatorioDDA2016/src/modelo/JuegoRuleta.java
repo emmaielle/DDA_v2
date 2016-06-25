@@ -8,8 +8,6 @@ package modelo;
 import exceptions.InvalidUserActionException;
 import java.awt.Color;
 import java.util.ArrayList;
-import mapeadores.MapeadorRonda;
-import persistencia.BaseDatos;
 
 /**
  *
@@ -84,7 +82,7 @@ public class JuegoRuleta  {
     public String toString() {
         return "Ruleta (" + this.listadoMesas.size() + ")";
     }
-
+    
     // </editor-fold>
 
 }

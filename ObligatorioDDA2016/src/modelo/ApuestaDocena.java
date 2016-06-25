@@ -15,7 +15,6 @@ import java.util.Date;
  */
 public class ApuestaDocena extends Apuesta {
 
-
     private static final int COEFICIENTE_PAGO = 3;
     
     public ApuestaDocena(int monto, JugadorRuleta jugador, String numero, Ronda ronda, Date fechaHora) {
@@ -26,7 +25,6 @@ public class ApuestaDocena extends Apuesta {
     public int getCoeficientePago() {
         return COEFICIENTE_PAGO;
     }
-
  
     @Override
     public String getTipo() {
