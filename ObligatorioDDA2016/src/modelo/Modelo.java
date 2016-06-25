@@ -118,15 +118,15 @@ public class Modelo extends Observable {
         return m.getUnusedColour();
     }
 
-    public int ultNumeroSorteado(Mesa m) {
+    public Numero ultNumeroSorteado(Mesa m) {
         return m.getNumeroGanador();
     }
 
-    public void apostar(Mesa mesa, Numero n, String v, JugadorRuleta jugador) throws InvalidUserActionException {
-        mesa.apostarUnNumero(n, v, jugador);
+    public void apostar(String numero, Mesa mesa, Numero n, String v, JugadorRuleta jugador) throws InvalidUserActionException {
+        mesa.apostarUnNumero(numero, n, v, jugador);
     }  
 
-    public int finalizarApuesta(Mesa mesa, JugadorRuleta jr) {
+    public Numero finalizarApuesta(Mesa mesa, JugadorRuleta jr) {
         return mesa.finalizarApuesta(jr);
     }
 
@@ -138,5 +138,7 @@ public class Modelo extends Observable {
         return mesa.estaEnEspera(jugador);
     }
     // </editor-fold>
+
+
 
 }

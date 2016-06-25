@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import modelo.Apuesta;
+import modelo.Numero;
 import modelo.Ronda;
 import persistencia.Persistente;
 
@@ -50,7 +51,7 @@ public class MapeadorRonda implements Persistente{
         sqls.add(
                 "INSERT INTO ronda (oid,fechaYhoraFin,nomMesa,nroSorteado) VALUES " +
                   "(" + getOid() + ",'" + new Timestamp(r.getFechaYhoraFin().getTime()) + "','" + r.getMesa().getNombre()+
-                  "'," + r.getNroGanador() + ")");
+                  "'," + r.getNroGanador().getValor() + ")");
         agregarApuestas(sqls);
         return sqls;
     }
@@ -90,9 +91,11 @@ public class MapeadorRonda implements Persistente{
         try {
             r.setOid(rs.getInt("oid"));
             r.setFechaYhoraFin(new Date(rs.getTimestamp("fechaYhoraFin").getTime()));
-            r.getMesa().setNombre(rs.getString("nomMesa"));
-            r.setNroGanador(rs.getInt("nroGanador"));
-            
+
+            r.getMesa().setNombre(rs.getString("nomMesa")); // esto va a estar mal creo
+            int valor = Integer.getInteger(rs.getString("nroGanador"));
+            r.setNroGanador(new Numero(valor));
+
         } catch (SQLException ex) {
             System.out.println("Error al leer la ronda:" + ex.getMessage());
         }
@@ -111,8 +114,8 @@ public class MapeadorRonda implements Persistente{
     private void agregarApuestas(ArrayList<String> sqls) {
         ArrayList<Apuesta> apuestas = r.getApuestas();
         for(Apuesta a:apuestas){
-            sqls.add("INSERT INTO apuesta (oidRonda,numero,monto,oidJugador) values ("+getOid()+","
-                    +a.getNumero().getValor()+","+a.getMonto()+","+a.getJugador().getJugador().getOid()+")");
+            sqls.add("INSERT INTO apuesta (oidRonda,numero,monto,oidJugador) values ("+getOid()+",'"
+                    +a.getNumero()+"',"+a.getMonto()+","+a.getJugador().getJugador().getOid()+")");
         }
     }
     

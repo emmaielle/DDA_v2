@@ -6,9 +6,7 @@
 package modelo;
 
 import java.util.ArrayList;
-
 import java.util.Date;
-
 import java.util.Observer;
 
 
@@ -19,10 +17,11 @@ import java.util.Observer;
 public class Ronda implements Observer{
     private int oid;
     private final int nroRonda;
-    private Apuesta apuestaGanadora;
-    private int nroGanador = -1;
+    private ArrayList<Apuesta> apuestasGanadoras = new ArrayList<>();
+    private Numero nroGanador = null;
+    //private String colorGanador; ///
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
-    private static int TIEMPO_LIMITE = 1; // minutos
+    private static int TIEMPO_LIMITE = 10; // minutos
     private final Mesa mesa;
     private Date fechaYhoraFin;
     private final Proceso elProceso;
@@ -40,7 +39,7 @@ public class Ronda implements Observer{
     //</editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Getters y setters">
-    public int getNroGanador() {
+    public Numero getNroGanador() {
         return nroGanador;
     }
 
@@ -64,8 +63,8 @@ public class Ronda implements Observer{
         return nroRonda;
     }
 
-    public Apuesta getApuestaGanadora() {
-        return apuestaGanadora;
+    public ArrayList<Apuesta> getApuestaGanadora() {
+        return apuestasGanadoras;
     }
 
     public ArrayList<Apuesta> getApuestas() {
@@ -89,7 +88,7 @@ public class Ronda implements Observer{
         this.fechaYhoraFin = fechaYhoraFin;
     }
     //agregue para la persistencia
-    public void setNroGanador(int nroGanador) {
+    public void setNroGanador(Numero nroGanador) {
         this.nroGanador = nroGanador;
     }
 
@@ -104,29 +103,47 @@ public class Ronda implements Observer{
     // <editor-fold defaultstate="collapsed" desc="Metodos">
     
     // sortea si no existe, sino devuelve existente
-    public int sortearNroGanador() {
-        if (nroGanador == -1){ // todavia no se sorteo
+    public Numero sortearNroGanador() {
+        if (nroGanador == null){ // todavia no se sorteo
             int randomOut = (int)Math.floor(Math.random()*37);
-            nroGanador = randomOut; 
+            Numero tablero = mesa.buscarNumeroEnTablero(randomOut);
+            nroGanador = new Numero(tablero.getValor(), tablero.getColor());
             lookForWinner();
             this.fechaYhoraFin=new Date();
-            return randomOut;
+            return nroGanador;
         }
         return nroGanador;
     }
     
-    public Apuesta buscarApuestaPorNumero(Numero n){
-        Apuesta yaApostada = null;
+    public ApuestaPleno buscarApuestaPorNumero(Numero n){
+        ApuestaPleno yaApostada = null;
         for (Apuesta a: apuestas){
-            if (a.getNumero() == n) yaApostada = a;
+            if (a instanceof ApuestaPleno){
+                ApuestaPleno ap = (ApuestaPleno)a;
+                if (ap.getNumeroTablero() == n)
+                    yaApostada = ap;
+            }
         }
         return yaApostada;
     }
     
-    public void apostar(Numero n, int v, JugadorRuleta jugador) { //funciona en ambos sentidos si se clickea de nuevo
-        Apuesta yaApostada = buscarApuestaPorNumero(n);
+    private Apuesta buscarApuestaPorTipo(String tipo) {
+        Apuesta yaApostada = null;
+        String type = tipo.split(" ")[0];
+        String eleccion = tipo.split(" ")[1];
+         for (Apuesta a: apuestas){
+            if (a.getTipo().equals(type)){
+                if (a.getNumero().split(" ")[1].equals(eleccion))
+                    yaApostada = a;
+            }
+        }
+        return yaApostada;
+    }
+    
+    public void apostar(String numero, Numero n, int v, JugadorRuleta jugador) { //funciona en ambos sentidos si se clickea de nuevo
+        Apuesta yaApostada = buscarApuestaPorTipo(numero);
         if (yaApostada == null){ // si entra aca es porque ese numero no fue elegido antes
-            ApuestaPleno a = new ApuestaPleno(v, jugador, n,String.valueOf(n.getValor()), this, new Date());
+            Apuesta a = setApuestaByType(numero, v, jugador, n);
             if (a.validar()){
                 if (!areThereBetsInThisRondaForThisPlayer(jugador)) {
                     jugador.setRondasSinApostarAnterior(jugador.getRondasSinApostar());
@@ -136,7 +153,7 @@ public class Ronda implements Observer{
                 jugador.getJugador().modificarSaldo(false, v);
             }
         }
-        else desapostar(jugador, n);
+        else desapostar(jugador, numero);
     }
     
     public void desapostar(JugadorRuleta j, Numero n){
@@ -146,9 +163,18 @@ public class Ronda implements Observer{
         if (!areThereBetsInThisRondaForThisPlayer(j)) j.setRondasSinApostar(j.getRondasSinApostarAnterior());
     }
     
+    public void desapostar(JugadorRuleta j, String tipo) {
+        Apuesta yaApostada = buscarApuestaPorTipo(tipo);
+        if (yaApostada.getJugador().equals(j)) 
+            quitarApuesta(yaApostada);
+        if (!areThereBetsInThisRondaForThisPlayer(j)) j.setRondasSinApostar(j.getRondasSinApostarAnterior());
+    }
+    
     public void quitarApuesta(Apuesta a){
         a.getJugador().getJugador().modificarSaldo(true,a.getMonto());
-        a.getNumero().setApuesta(null);
+        if (a instanceof ApuestaPleno){
+            ((ApuestaPleno)a).getNumeroTablero().setApuesta(null);
+        }
         a.getJugador().quitarApuesta(a);
         a.setJugador(null);
         a.setRonda(null);
@@ -156,33 +182,28 @@ public class Ronda implements Observer{
         Modelo.getInstancia().avisar(Modelo.EVENTO_TABLERO);
     }
     
+    // unico para el pleno 
     public void agregarApuesta(Apuesta a){
-        if(a.getNum()=="docena"){
-        }
-        else if(a.getNum()=="color"){
-        }
-        else{
-            a.getNumero().setApuesta(a);
+
+        if (a instanceof ApuestaPleno){
+            ((ApuestaPleno)a).getNumeroTablero().setApuesta(a);
         }
         a.getJugador().agregarApuesta(a);
         apuestas.add(a);
         Modelo.getInstancia().avisar(Modelo.EVENTO_TABLERO);
     }
-    public void agregar(String numero, int monto,int oidJugador){
-        apuestas.add(new Apuesta(monto, null, null, numero, this, fechaYhoraFin));
-    }
 
 
     private void lookForWinner() {
         for (Apuesta a : apuestas){
-            if (a.getNumero().getValor() == nroGanador) apuestaGanadora = a;
+            if (a.esGanadora(nroGanador)) apuestasGanadoras.add(a);
         }
     }
     
     public void modificarSaldos() {
         for (Apuesta a: apuestas){
             Jugador j = a.getJugador().getJugador();
-            if (apuestaGanadora != null && apuestaGanadora.equals(a)){ // si hubo un ganador
+            if (apuestasGanadoras != null && apuestasGanadoras.equals(a)){ // si hubo un ganador
                 j.modificarSaldo(true, a.getMonto()* 35);
                 j.setTotalCobrado(j.getTotalCobrado() + a.getMonto() * 35);
                 j.setTotalApostado(j.getTotalApostado() + a.getMonto());
@@ -240,6 +261,26 @@ public class Ronda implements Observer{
     public void quitarObservador() {
         elProceso.deleteObserver(this);
     }
+
+    private Apuesta setApuestaByType(String numero, int monto, JugadorRuleta jugador, Numero n) {
+        Apuesta a;
+        String type = numero.split(" ")[0];
+        if (n != null && type.equals("Pleno")){
+            a = new ApuestaPleno(monto, jugador, numero, n, this, new Date());
+        }
+        else if (type.equals("Color")){
+            a = new ApuestaColor(monto, jugador, numero, this, new Date());
+        }
+        else if (type.equals("Docena")){
+            a = new ApuestaDocena(monto, jugador, numero, this, new Date());
+        }
+        else a = null;
+        return a;
+    }
+
+
+
+
 
 
 }

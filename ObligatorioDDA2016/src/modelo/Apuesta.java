@@ -12,23 +12,22 @@ import java.util.Date;
  *
  * @author Euge
  */
-public class Apuesta {
+public abstract class Apuesta {
     private int oid;
     private int monto;
     private JugadorRuleta jugador;
-    private String num;
-    private Numero numero;
+    private String numero;
     private Ronda ronda;
     private final Date fechaHora;
     private int montoGanado;
 
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
-    public Apuesta(int monto, JugadorRuleta jugador, Numero numero,String num, Ronda ronda, Date fechaHora) {
+
+    public Apuesta(int monto, JugadorRuleta jugador, String sNumero, Ronda ronda, Date fechaHora) {
         this.monto = monto;
         this.jugador = jugador;
-        this.num=num;
-        this.numero = numero;
+        this.numero = sNumero;
         this.ronda = ronda;
         this.fechaHora = fechaHora;
     }
@@ -71,11 +70,11 @@ public class Apuesta {
         this.jugador = jugador;
     }
 
-    public Numero getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(Numero numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
@@ -86,14 +85,8 @@ public class Apuesta {
     public void setOid(int oid) {
         this.oid = oid;
     }
-
-    public String getNum() {
-        return num;
-    }
-
-    public void setNum(String num) {
-        this.num = num;
-    }
+    
+    public abstract int getCoeficientePago();
     
     // </editor-fold>
     
@@ -111,9 +104,13 @@ public class Apuesta {
             return "Mesa: " + this.getRonda().getMesa().getNombre() + "; Fecha: " +
                     sdf.format(this.getFechaHora().getTime()) + "; Hora: " +
                     sdf1.format(this.getFechaHora().getTime())
-                    + "; Numero: " + this.getNumero().getValor() + 
-                    "; Num: "+this.getNum()+"Monto ganado: " + this.getMontoGanado();
+                    + "; Numero: " + this.getNumero() + 
+                    "; Monto ganado: " + this.getMontoGanado();
+
     }
+
+    public abstract String getTipo();
     
+    public abstract boolean esGanadora(Numero numero);
     
 }

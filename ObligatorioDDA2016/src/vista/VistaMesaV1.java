@@ -64,7 +64,7 @@ public class VistaMesaV1 extends javax.swing.JDialog implements VistaMesa, Actio
         });
         getContentPane().setLayout(null);
 
-        setBounds(0, 0, 716, 493);
+        setBounds(0, 0, 716, 549);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -92,7 +92,7 @@ public class VistaMesaV1 extends javax.swing.JDialog implements VistaMesa, Actio
         Numero n = origen.getNumero();
         try{
             String sMonto = top.obtenerApuesta();
-            controlador.apostar(n, sMonto);
+            controlador.apostar("Pleno " + n.getValor(), n, sMonto); // change heree
         }
         catch (InvalidUserActionException ex){
             JOptionPane.showMessageDialog(this, ex.getMessage());

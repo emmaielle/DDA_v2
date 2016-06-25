@@ -142,7 +142,7 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
         ArrayList<String> out = new ArrayList<>();
         for (Apuesta a: apuestas){
             String tmp = "Jugador: " + a.getJugador().getJugador().getNombreCompleto() + 
-                    "; Apuesta: " + a.getNumero().getValor() + 
+                    "; Apuesta: " + a.getNumero() + 
                     "; Monto ganado: " + a.getMontoGanado();
             out.add(tmp);
         }

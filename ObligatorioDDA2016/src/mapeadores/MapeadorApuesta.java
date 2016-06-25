@@ -42,16 +42,18 @@ public class MapeadorApuesta implements Persistente{
     public ArrayList<String> getSqlInsert() {
         ArrayList<String> sqls = new ArrayList();
         sqls.add(
-                "INSERT INTO apuesta (oidronda,numero,monto,oidjugador) VALUES " +
-                  "(" + a.getRonda().getOid() + "," + a.getNumero().getValor()+  
-                  "," +a.getMonto()+","+a.getJugador().getJugador().getOid()+")");
+
+                "INSERT INTO apuesta (oid,numero,monto,oidjugador,oidronda) VALUES " +
+                  "(" + getOid() + "," + a.getNumero()+  
+                  "," +a.getMonto()+","+a.getJugador().getJugador().getOid()+","+a.getRonda().getOid()+")");
+
         return sqls;
     }
 
     @Override
     public ArrayList<String> getSqlUpdate() {
         ArrayList<String> sqls = new ArrayList();
-        sqls.add("UPDATE apuesta set numero=" + a.getNumero().getValor()+ ", monto=" + a.getMonto()+",oidjugador="+a.getJugador().getJugador().getOid()+ ",oidronda="+a.getRonda().getOid()+"WHERE oid = " + a.getOid());
+        sqls.add("UPDATE apuesta set numero=" + a.getNumero()+ ", monto=" + a.getMonto()+",oidjugador="+a.getJugador().getJugador().getOid()+ ",oidronda="+a.getRonda().getOid()+"WHERE oid = " + a.getOid());
         return sqls;
     }
 

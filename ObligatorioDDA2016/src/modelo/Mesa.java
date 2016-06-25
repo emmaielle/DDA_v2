@@ -90,7 +90,7 @@ public class Mesa {
         if(jugadoresMesa.isEmpty()){
             jugadoresMesa.add(jr);
         }    
-        else if(jugadoresMesa.size()<4 && this.buscarRonda(this.getUltimaRonda()).getNroGanador()==-1){
+        else if(jugadoresMesa.size()<4 && this.buscarRonda(this.getUltimaRonda()).getNroGanador() == null){
             jugadoresEspera.add(jr);           
         }
         Modelo.getInstancia().avisar(Modelo.EVENTO_NUEVO_JUGADOR_MESA_RULETA);
@@ -206,9 +206,9 @@ public class Mesa {
         return null;
     }
 
-    public int sortearNumeroGanador() {
+    public Numero sortearNumeroGanador() {
         Ronda ultimaRonda = buscarRonda(getUltimaRonda());
-        int nro = ultimaRonda.sortearNroGanador(); 
+        Numero nro = ultimaRonda.sortearNroGanador(); 
         // reviso resultados // aviso ganadores // reparto plata // guardo historial
         ultimaRonda.modificarSaldos();
         persistencia();
@@ -232,12 +232,12 @@ public class Mesa {
         Modelo.getInstancia().avisar(Modelo.EVENTO_NUEVO_JUGADOR_MESA_RULETA);
     }
     
-    public int getNumeroGanador() {
-        if (this.getUltimaRonda() == 1) return -1;
+    public Numero getNumeroGanador() {
+        if (this.getUltimaRonda() == 1) return new Numero(-1);
         return (this.buscarRonda(this.getUltimaRonda() - 1)).getNroGanador();
     }
 
-    public void apostarUnNumero(Numero n, String v, JugadorRuleta jugador) throws InvalidUserActionException {
+    public void apostarUnNumero(String numero, Numero n, String v, JugadorRuleta jugador) throws InvalidUserActionException {
         if(jugadoresEspera.contains(jugador)) throw new InvalidUserActionException("Debe esperar a que finalice la ronda actual");
         if(jugador.isApostado()) throw new InvalidUserActionException("Ya ha finalizado su apuesta");
         
@@ -249,7 +249,7 @@ public class Mesa {
             if(montoInt != 0){
                 for(JugadorRuleta jr:jugadoresMesa){
                     if(jugador==jr)
-                        (buscarRonda(getUltimaRonda())).apostar(n, montoInt, jugador);
+                        (buscarRonda(getUltimaRonda())).apostar(numero, n, montoInt, jugador);
                 }
                 Modelo.getInstancia().avisar(Modelo.EVENTO_ACTUALIZA_SALDOS);
             }
@@ -264,15 +264,24 @@ public class Mesa {
         }
         Modelo.getInstancia().avisar(Modelo.EVENTO_ACTUALIZA_SALDOS);
     }
+    
+    public void desapostar(String tipo, JugadorRuleta jugador) throws InvalidUserActionException{
+        if(jugador.isApostado()) throw new InvalidUserActionException("Ya ha finalizado su apuesta");
+        for(JugadorRuleta jr:jugadoresMesa){
+            if(jugador==jr)
+                (buscarRonda(getUltimaRonda())).desapostar(jugador, tipo);
+        }
+        Modelo.getInstancia().avisar(Modelo.EVENTO_ACTUALIZA_SALDOS);
+    }
 
-    public int finalizarApuestaPorTiempo(){
+    public Numero finalizarApuestaPorTiempo(){
         cantFinalizados = jugadoresMesa.size();
         return apuestaTotal();
     }
     
-    public int finalizarApuesta(JugadorRuleta jr){
+    public Numero finalizarApuesta(JugadorRuleta jr){
         cantFinalizados++;
-        int nroSorteado = apuestaTotal();
+        Numero nroSorteado = apuestaTotal();
         Modelo.getInstancia().avisar(Modelo.EVENTO_SIN_JUGAR);
         return nroSorteado;
     } 
@@ -282,16 +291,20 @@ public class Mesa {
             jr.setApostado(si);
         }
     }
-    public int apuestaTotal() {
+    public Numero apuestaTotal() {
         // a cada jugador en juego le suma una ronda sin apostar. Los que si habian apostado quedan 
         // en 0 y los que tenian X rondas sin apostar le suman 1.
         // cuando terminaron de apostar todos. O cuando apostaron todos menos uno que se va
         if(cantFinalizados == jugadoresMesa.size() || cantFinalizados == jugadoresMesa.size() + 1){ 
             yaApostado(false);
             sumarRondaSinApostar();
-            return sortearNumeroGanador();
+
+            Numero nroGan =  sortearNumeroGanador();
+            persistencia();
+            return nroGan;
+
         }
-        else return -1;
+        else return null;
     }
     
     private void sumarRondaSinApostar() {
@@ -337,10 +350,8 @@ public class Mesa {
         bd.conectar(url, user, pass);
         for(JugadorRuleta jr:jugadoresMesa){
             persistoJugador(jr, bd);
-            persistoRonda(jr,bd);            
-            //System.out.println(j);
-        }
-        
+            persistoRonda(jr,bd);   
+        }     
         bd.desconectar();
 
     }
@@ -360,9 +371,14 @@ public class Mesa {
         bd.guardar(mapR);
     }
 
-    
 
-
+    Numero buscarNumeroEnTablero(int randomOut) {
+        ArrayList<Numero> nums = this.getNumeros();
+        for (Numero n: nums){
+            if (n.getValor() == randomOut) return n;
+        }
+        return null;
+    }
 
    
 }

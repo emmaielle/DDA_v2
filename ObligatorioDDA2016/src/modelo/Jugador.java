@@ -146,9 +146,7 @@ public class Jugador {
     
     // </editor-fold>
 
-    public void agregar(String string, int aInt, int aInt0) {
-        apuestas.add(new Apuesta(aInt, null, null, string, null, null));
-    }
+    
 
 
 
