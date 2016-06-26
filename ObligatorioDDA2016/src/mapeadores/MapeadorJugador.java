@@ -75,7 +75,7 @@ public class MapeadorJugador implements Persistente {
     @Override
     public void leer(ResultSet rs) {
         try {
-            if(j.getOid()==0){
+            if(j.getNombre()==null){
                 j.setOid(rs.getInt("oid"));
                 j.setNombre(rs.getString("nombre"));
                 j.setPassword(rs.getString("password"));
