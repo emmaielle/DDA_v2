@@ -104,6 +104,7 @@ public class Ronda implements Observer{
     
     // sortea si no existe, sino devuelve existente
     public Numero sortearNroGanador() {
+        
         if (nroGanador == null){ // todavia no se sorteo
             int randomOut = (int)Math.floor(Math.random()*37);
             Numero tablero = mesa.buscarNumeroEnTablero(randomOut);

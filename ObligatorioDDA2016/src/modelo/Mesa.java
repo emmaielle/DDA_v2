@@ -299,7 +299,6 @@ public class Mesa {
             yaApostado(false);
             sumarRondaSinApostar();
             Numero nroGan =  sortearNumeroGanador();
-            persistencia();
             return nroGan;
         }
         else return null;
@@ -371,7 +370,7 @@ public class Mesa {
         bd.guardar(mapR);
     }
 
-    Numero buscarNumeroEnTablero(int randomOut) {
+    public Numero buscarNumeroEnTablero(int randomOut) {
         ArrayList<Numero> nums = this.getNumeros();
         for (Numero n: nums){
             if (n.getValor() == randomOut) return n;

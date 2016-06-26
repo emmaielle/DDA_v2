@@ -8,6 +8,7 @@ package mapeadores;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import modelo.Jugador;
 import persistencia.Persistente;
 
@@ -77,6 +78,7 @@ public class MapeadorJugador implements Persistente {
             j.setPassword(rs.getString("password"));
             j.setNombreCompleto(rs.getString("nombreUsuario"));
             j.setSaldo(rs.getInt("saldo"));
+            j.agregar(rs.getString("numero"),rs.getInt("monto"),rs.getInt("oidRonda"),new Date(rs.getTimestamp("fecha").getTime()),rs.getString("nomMesa"),rs.getInt("nroSorteado"));
         } catch (SQLException ex) {
             System.out.println("Error al leer usuario:" + ex.getMessage());
         }
