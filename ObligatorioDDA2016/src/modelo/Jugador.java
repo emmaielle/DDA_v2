@@ -24,6 +24,7 @@ public class Jugador {
     private boolean enJuego;
     private boolean enMesa;
     private boolean statsOn;
+    private boolean apuestasOn;
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
     
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
@@ -125,6 +126,17 @@ public class Jugador {
     public ArrayList<Apuesta> getApuestas() {
         return apuestas;
     }
+
+    public boolean isApuestasOn() {
+        return apuestasOn;
+    }
+
+    public void setApuestasOn(boolean apuestasOn) {
+        this.apuestasOn = apuestasOn;
+        Modelo.getInstancia().avisar(Modelo.EVENTO_APUESTASWINDOW);
+    }
+    
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Metodos"> 

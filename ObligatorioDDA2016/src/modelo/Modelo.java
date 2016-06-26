@@ -32,6 +32,8 @@ public class Modelo extends Observable {
     public static final int EVENTO_CHECK_SALDOS = 11;
     public static final int EVENTO_ADD_SECONDS = 12;
     public static final int EVENTO_SIN_JUGAR = 13;
+    public static final int EVENTO_APUESTASWINDOW = 14;
+
     
     private Modelo() {
     }

@@ -240,7 +240,10 @@ public class Mesa {
         if(jugadoresEspera.contains(jugador)) throw new InvalidUserActionException("Debe esperar a que finalice la ronda actual");
         if(jugador.isApostado()) throw new InvalidUserActionException("Ya ha finalizado su apuesta");
         
-        if (v.equals("")) desapostar(n, jugador); 
+        if (v.equals("")) {
+            desapostar(n, jugador);
+            if (!numero.split(" ")[0].equals("Pleno")) throw new InvalidUserActionException("");
+        } 
         else {
             int montoInt = Integer.parseInt(v);
             if(jugador.getJugador().getSaldo() < montoInt) throw new InvalidUserActionException("No tiene saldo suficiente para realizar esta apuesta");
@@ -259,7 +262,7 @@ public class Mesa {
         if(jugador.isApostado()) throw new InvalidUserActionException("Ya ha finalizado su apuesta");
         for(JugadorRuleta jr:jugadoresMesa){
             if(jugador==jr)
-                if (n.getApuesta() != null) (buscarRonda(getUltimaRonda())).desapostar(jugador, n);
+                if (n!=null && n.getApuesta() != null) (buscarRonda(getUltimaRonda())).desapostar(jugador, n);
         }
         Modelo.getInstancia().avisar(Modelo.EVENTO_ACTUALIZA_SALDOS);
     }

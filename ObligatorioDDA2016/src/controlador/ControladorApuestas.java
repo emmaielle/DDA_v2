@@ -10,7 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 import modelo.Apuesta;
 import modelo.Jugador;
-import modelo.JugadorRuleta;
+import modelo.Modelo;
 
 /**
  *
@@ -18,23 +18,33 @@ import modelo.JugadorRuleta;
  */
 public class ControladorApuestas implements Observer{
     
-    private JugadorRuleta jr;
+    private Modelo modelo = Modelo.getInstancia();
+    private VistaApuestas vista;
+    private Jugador j;
 
-    public ControladorApuestas(JugadorRuleta jr) {
-        this.jr = jr;
+    public ControladorApuestas(VistaApuestas vista, Jugador j) {
+        this.vista = vista;
+        this.j = j;
+        modelo.addObserver(this);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if(arg.equals(Modelo.EVENTO_SORTEARNUMERO)){  
+            vista.mostrarApuestas(cargarApuestas());
+        }
     }
 
     public ArrayList<Apuesta> cargarApuestas() {
-        return jr.getJugador().getApuestas();
+        return j.getApuestas();
     }
 
     public ArrayList<Apuesta> cargarApuestasPorRonda(Apuesta a) {
         return a.getRonda().getApuestas();
+    }
+
+    public void salirDeApuestas() {
+        j.setApuestasOn(false);
     }
     
     

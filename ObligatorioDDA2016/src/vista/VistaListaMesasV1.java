@@ -19,8 +19,9 @@ import modelo.Mesa;
  */
 public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaListaMesas {
 
-    private ControladorListaMesas controlador;
+    private final ControladorListaMesas controlador;
     private VistaMesaV1 vistaMesa;
+    private VistaApuestasV1 vistaApuestas;
     
     public VistaListaMesasV1(Jugador j) {
         initComponents();
@@ -39,6 +40,7 @@ public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaLista
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnCrear = new javax.swing.JButton();
+        btn_apuestas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("MESAS ACTIVAS");
@@ -86,6 +88,15 @@ public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaLista
         getContentPane().add(btnCrear);
         btnCrear.setBounds(270, 220, 73, 23);
 
+        btn_apuestas.setText("Ver apuestas realizadas");
+        btn_apuestas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_apuestasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_apuestas);
+        btn_apuestas.setBounds(180, 260, 160, 40);
+
         setBounds(0, 0, 483, 410);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -101,9 +112,14 @@ public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaLista
         salirDeJuego();
     }//GEN-LAST:event_formWindowClosing
 
+    private void btn_apuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_apuestasActionPerformed
+        controlador.verApuestas();
+    }//GEN-LAST:event_btn_apuestasActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btn_apuestas;
     private javax.swing.JButton btn_enterTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -158,6 +174,9 @@ public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaLista
             vistaMesa.salirDeMesa(); 
             vistaMesa.dispose();
         }
+        if (vistaApuestas != null){
+            vistaApuestas.dispose();
+        }
         
     }
 
@@ -170,6 +189,18 @@ public class VistaListaMesasV1 extends javax.swing.JDialog implements VistaLista
     public void eliminarObservador() {
         controlador.eliminarObservador();
     }
+    
+    @Override
+    public void verApuestas(Jugador j) {
+        vistaApuestas = new VistaApuestasV1(j);
+        vistaApuestas.setLocationRelativeTo(null);
+        habilitarApuestas(false);
+        vistaApuestas.setVisible(true);
+    }
 
+    @Override
+    public void habilitarApuestas(boolean b) {
+        btn_apuestas.setEnabled(b);
+    }
     
 }

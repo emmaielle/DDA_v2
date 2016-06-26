@@ -183,7 +183,6 @@ public class Ronda implements Observer{
         Modelo.getInstancia().avisar(Modelo.EVENTO_TABLERO);
     }
     
-    // unico para el pleno 
     public void agregarApuesta(Apuesta a){
         if (a instanceof ApuestaPleno){
             ((ApuestaPleno)a).getNumeroTablero().setApuesta(a);

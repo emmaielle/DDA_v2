@@ -9,7 +9,7 @@ import controlador.ControladorApuestas;
 import controlador.VistaApuestas;
 import java.util.ArrayList;
 import modelo.Apuesta;
-import modelo.JugadorRuleta;
+import modelo.Jugador;
 
 /**
  *
@@ -17,12 +17,12 @@ import modelo.JugadorRuleta;
  */
 public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuestas{
 
-    private ControladorApuestas controlador;
+    private final ControladorApuestas controlador;
     
-    public VistaApuestasV1(JugadorRuleta j) {
+    public VistaApuestasV1(Jugador j) {
         initComponents();
-        controlador = new ControladorApuestas(j);
-        lbl_title.setText("Apuestas de " + j.getJugador().getNombreCompleto());
+        controlador = new ControladorApuestas(this, j);
+        lbl_title.setText("Apuestas de " + j.getNombreCompleto());
         mostrarApuestas(controlador.cargarApuestas());
     }
 
@@ -40,6 +40,11 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
         lbl_nroSorteado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lista_Apuestas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lista_Apuestas.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -102,9 +107,15 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
     }// </editor-fold>//GEN-END:initComponents
 
     private void lista_ApuestasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lista_ApuestasValueChanged
-        mostrarApuestasPorRonda(controlador.cargarApuestasPorRonda((Apuesta)lista_Apuestas.getSelectedValue()));
-        mostrarNumeroSorteado((Apuesta)lista_Apuestas.getSelectedValue());
+        if (lista_Apuestas.getSelectedValue() != null){
+            mostrarApuestasPorRonda(controlador.cargarApuestasPorRonda((Apuesta)lista_Apuestas.getSelectedValue()));
+            mostrarNumeroSorteado((Apuesta)lista_Apuestas.getSelectedValue());
+        }
     }//GEN-LAST:event_lista_ApuestasValueChanged
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        salirDeApuestas();
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -143,5 +154,10 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
 
     private void mostrarNumeroSorteado(Apuesta apuesta) {
         lbl_nroSorteado.setText("Numero ganador: " + apuesta.getRonda().getNroGanador().getValor());
+    }
+    
+    @Override
+    public void salirDeApuestas() {
+        controlador.salirDeApuestas();       
     }
 }

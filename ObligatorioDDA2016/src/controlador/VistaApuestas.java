@@ -15,4 +15,5 @@ import modelo.Apuesta;
 public interface VistaApuestas {
     public void mostrarApuestas(ArrayList<Apuesta> apuestas);
     public void mostrarApuestasPorRonda(ArrayList<Apuesta> apuestas);
+    public void salirDeApuestas();
 }
