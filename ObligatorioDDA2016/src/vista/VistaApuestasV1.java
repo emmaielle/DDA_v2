@@ -42,6 +42,9 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
         lbl_nroSorteado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(null);
+        getContentPane().add(lbl_title);
+        lbl_title.setBounds(266, 27, 193, 27);
 
         lista_Apuestas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lista_Apuestas.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -51,56 +54,30 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
         });
         jScrollPane1.setViewportView(lista_Apuestas);
 
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(48, 102, 483, 206);
+
         lista_Apuestas_ENRONDA.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jScrollPane2.setViewportView(lista_Apuestas_ENRONDA);
 
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(48, 369, 483, 206);
+
         jLabel1.setText("Apuestas en la ronda:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(48, 331, 106, 14);
 
         jLabel2.setText("Apuestas:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(48, 82, 49, 14);
 
         lbl_nroSorteado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lbl_nroSorteado.setForeground(new java.awt.Color(255, 51, 51));
         lbl_nroSorteado.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(lbl_nroSorteado);
+        lbl_nroSorteado.setBounds(171, 331, 360, 26);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbl_title, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(109, 109, 109))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbl_nroSorteado, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(lbl_title, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(lbl_nroSorteado, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
-        pack();
+        setBounds(0, 0, 584, 628);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lista_ApuestasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lista_ApuestasValueChanged

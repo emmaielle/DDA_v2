@@ -36,6 +36,7 @@ public class Ronda implements Observer{
         elProceso.reset();
         elProceso.ejecutar();
     }
+    
     //</editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Getters y setters">

@@ -147,8 +147,16 @@ public class Jugador {
     // </editor-fold>
 
     public void agregar(String string, int aInt, int aInt0, Date date, String string0, int aInt1) {
-        if(string.contains("pleno"))
-            apuestas.add(new ApuestaPleno(aInt, null, string, null, null, date));
+        Ronda r = new Ronda(aInt0, new Mesa(string0));
+        r.setNroGanador(new Numero(aInt1));
+        if(string.contains("Pleno"))
+            apuestas.add(new ApuestaPleno(aInt, null, string, null, r, date));
+        if(string.contains("Docena"))
+            apuestas.add(new ApuestaDocena(aInt1, null, string, r, date));
+        if(string.contains("Color"))
+            apuestas.add(new ApuestaColor(aInt1, null, string, r, date));
+
+
     }
 
 

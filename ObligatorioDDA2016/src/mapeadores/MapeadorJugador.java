@@ -65,20 +65,27 @@ public class MapeadorJugador implements Persistente {
 
     @Override
     public String getSqlSelect() {
-        String sql = "SELECT * FROM usuario";
-        if(j!=null) sql+= " where oid=" + getOid();
+        String sql = "SELECT * FROM usuario u LEFT JOIN apuesta a ON u.oid=a.oidJugador LEFT JOIN ronda r ON a.oidRonda=r.oid";
+        // u LEFT JOIN apuesta a ON u.oid=a.oidJugador LEFT JOIN ronda r ON a.oidRonda=r.oid
+        if(j!=null) {sql+= " where u.oid=" + getOid();
+        sql+=" ORDER BY u.oid,r.oid";}
         return sql;
     }
 
     @Override
     public void leer(ResultSet rs) {
         try {
-            j.setOid(rs.getInt("oid"));
-            j.setNombre(rs.getString("nombre"));
-            j.setPassword(rs.getString("password"));
-            j.setNombreCompleto(rs.getString("nombreUsuario"));
-            j.setSaldo(rs.getInt("saldo"));
-            j.agregar(rs.getString("numero"),rs.getInt("monto"),rs.getInt("oidRonda"),new Date(rs.getTimestamp("fecha").getTime()),rs.getString("nomMesa"),rs.getInt("nroSorteado"));
+            if(j.getOid()==0){
+                j.setOid(rs.getInt("oid"));
+                j.setNombre(rs.getString("nombre"));
+                j.setPassword(rs.getString("password"));
+                j.setNombreCompleto(rs.getString("nombreUsuario"));
+                j.setSaldo(rs.getInt("saldo"));
+            }
+            if(rs.getTimestamp("fechaYhoraFin")!=null){
+            j.agregar(rs.getString("numero"),rs.getInt("monto"),rs.getInt("oidRonda"),
+                    new Date(rs.getTimestamp("fechaYhoraFin").getTime()),
+                    rs.getString("nomMesa"),rs.getInt("nroSorteado"));}
         } catch (SQLException ex) {
             System.out.println("Error al leer usuario:" + ex.getMessage());
         }
