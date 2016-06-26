@@ -49,7 +49,6 @@ public class PanelDatos extends javax.swing.JPanel {
         lbl_total_apostado1 = new javax.swing.JLabel();
         lbl_totalApostadoRonda = new javax.swing.JLabel();
         lbl_color = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         lbl_tiempo = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -133,15 +132,6 @@ public class PanelDatos extends javax.swing.JPanel {
         add(lbl_color);
         lbl_color.setBounds(350, 20, 70, 14);
 
-        jButton1.setText("Ver apuestas realizadas");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        add(jButton1);
-        jButton1.setBounds(400, 180, 170, 40);
-
         lbl_tiempo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         add(lbl_tiempo);
         lbl_tiempo.setBounds(514, 4, 50, 30);
@@ -213,10 +203,6 @@ public class PanelDatos extends javax.swing.JPanel {
         
     }//GEN-LAST:event_txt_valorApuestaFocusLost
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        controlador.verApuestas();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void unoDoceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unoDoceActionPerformed
         apostarToggle("Docena 1", unoDoce.isSelected(), unoDoce);
     }//GEN-LAST:event_unoDoceActionPerformed
@@ -240,7 +226,6 @@ public class PanelDatos extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_finalizarA;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -331,10 +316,11 @@ public class PanelDatos extends javax.swing.JPanel {
                 String sMonto = obtenerApuesta();
                 controlador.apostar(tipo, null, sMonto); 
             }
-            else controlador.desapostar(tipo);
+            else controlador.desapostar(tipo); // aca arreglar 
         }
         catch (InvalidUserActionException ex){
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            if (!ex.getMessage().equals(""))
+                JOptionPane.showMessageDialog(this, ex.getMessage());
             toggleButton(button);
         }
     }

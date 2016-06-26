@@ -36,6 +36,10 @@ public class ControladorListaMesas implements Observer {
          || evento.equals(Modelo.EVENTO_SALIR_MESA)){
             listarMesas();
         }
+        else if (evento.equals(Modelo.EVENTO_APUESTASWINDOW)){
+            if (jugador.isApuestasOn()) vista.habilitarApuestas(false);
+            else vista.habilitarApuestas(true);
+        }
     }
     
     public void crearMesa(String nom){
@@ -77,6 +81,8 @@ public class ControladorListaMesas implements Observer {
         modelo.deleteObserver(this);
     }
 
-
+    public void verApuestas() {
+        vista.verApuestas(jugador);
+    }
    
 }
