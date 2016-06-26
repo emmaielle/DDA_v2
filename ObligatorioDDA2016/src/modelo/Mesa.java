@@ -359,7 +359,7 @@ public class Mesa {
 
     private void persistoJugador(JugadorRuleta jr, BaseDatos bd) {
         MapeadorJugador map = new MapeadorJugador();
-        ArrayList jugadores = bd.consultar(map, "where oid = "+jr.getJugador().getOid());
+        ArrayList jugadores = bd.consultar(map, " where u.oid = "+jr.getJugador().getOid());
         Jugador j = (Jugador) jugadores.get(0);
         map.setJ(j);
         j.setSaldo(jr.getJugador().getSaldo());

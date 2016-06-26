@@ -107,8 +107,8 @@ public class MapeadorRonda implements Persistente{
     private void agregarApuestas(ArrayList<String> sqls) {
         ArrayList<Apuesta> apuestas = r.getApuestas();
         for(Apuesta a:apuestas){
-            sqls.add("INSERT INTO apuesta (oidRonda,numero,monto,oidJugador) values ("+getOid()+",'"
-                    +a.getNumero()+"',"+a.getMonto()+","+a.getJugador().getJugador().getOid()+")");
+            sqls.add("INSERT INTO apuesta (oidRonda,numero,monto,montoGanado,oidJugador) values ("+getOid()+",'"
+                    +a.getNumero()+"',"+a.getMonto()+","+a.getMontoGanado()+","+a.getJugador().getJugador().getOid()+")");
         }
     }
     

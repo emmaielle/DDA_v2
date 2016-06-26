@@ -36,6 +36,7 @@ public class Ronda implements Observer{
         elProceso.reset();
         elProceso.ejecutar();
     }
+    
     //</editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Getters y setters">
@@ -281,6 +282,10 @@ public class Ronda implements Observer{
         }
         else a = null;
         return a;
+    }
+
+    public void agregar(Apuesta a) {
+        apuestas.add(a);
     }
 
 

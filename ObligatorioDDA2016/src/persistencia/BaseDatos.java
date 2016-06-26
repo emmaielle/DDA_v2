@@ -125,11 +125,17 @@ public class BaseDatos {
         String sql = p.getSqlSelect() + " " + where;
         ResultSet rs = consultar(sql);
         ArrayList<Object> resultado = new ArrayList();
+        int oid, oidAnt=-1;
         try {
             while(rs.next()){
-                p.crearNuevo();
+                oid=rs.getInt("oid");
+                if(oid!=oidAnt){
+                    p.crearNuevo();
+                    p.setOid(oid);        
+                    resultado.add(p.getObjeto());
+                    oidAnt=oid;
+                }
                 p.leer(rs);
-                resultado.add(p.getObjeto());
             }
         } catch (SQLException ex) {
             System.out.println("Error al obtener todos:" + ex.getMessage());

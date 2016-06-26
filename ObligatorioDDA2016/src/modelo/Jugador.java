@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -158,9 +159,34 @@ public class Jugador {
     
     // </editor-fold>
 
-    public void agregar(String string, int aInt, int aInt0, Date date, String string0, int aInt1) {
-        if(string.contains("pleno"))
-            apuestas.add(new ApuestaPleno(aInt, null, string, null, null, date));
+    public void agregar(String string, int aInt, int aInt0, Date date, String string0, int aInt1,int montGan) {
+        Ronda r = new Ronda(aInt0, new Mesa(string0));
+        r.setNroGanador(new Numero(aInt1));
+        if(string.contains("Pleno")){
+            ApuestaPleno a= new ApuestaPleno(aInt, new JugadorRuleta(Color.yellow, null, this), string, null, r, date);
+            a.setMontoGanado(montGan);
+            //agregue r.agregar para que las agregue de a una....
+            
+            apuestas.add(a);
+        }
+        if(string.contains("Docena")){
+            ApuestaDocena b=new ApuestaDocena(aInt1, new JugadorRuleta(Color.yellow, null, this), string, r, date);
+            b.setMontoGanado(montGan);
+            //r.agregar(b);
+            apuestas.add(b);
+        }
+        if(string.contains("Color")){
+            ApuestaColor c=new ApuestaColor(aInt1, new JugadorRuleta(Color.yellow, null, this), string, r, date);
+            c.setMontoGanado(montGan);
+            //r.agregar(c);
+            apuestas.add(c);
+        }
+        //no anda así hay q buscar otra solucion
+        for(Apuesta a:apuestas){
+            if(a.getRonda()==r)
+                r.setApuestas(apuestas);
+        }
+        
     }
 
 
