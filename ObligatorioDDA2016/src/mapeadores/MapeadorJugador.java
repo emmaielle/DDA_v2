@@ -85,7 +85,8 @@ public class MapeadorJugador implements Persistente {
             if(rs.getTimestamp("fechaYhoraFin")!=null){
             j.agregar(rs.getString("numero"),rs.getInt("monto"),rs.getInt("oidRonda"),
                     new Date(rs.getTimestamp("fechaYhoraFin").getTime()),
-                    rs.getString("nomMesa"),rs.getInt("nroSorteado"));}
+                    rs.getString("nomMesa"),rs.getInt("nroSorteado"),rs.getInt("montoGanado"));}
+            
         } catch (SQLException ex) {
             System.out.println("Error al leer usuario:" + ex.getMessage());
         }

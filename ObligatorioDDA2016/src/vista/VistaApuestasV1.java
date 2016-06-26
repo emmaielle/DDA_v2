@@ -7,10 +7,8 @@ package vista;
 
 import controlador.ControladorApuestas;
 import controlador.VistaApuestas;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import modelo.Apuesta;
-import modelo.Jugador;
 import modelo.JugadorRuleta;
 
 /**
@@ -99,12 +97,6 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
 
     @Override
     public void mostrarApuestas(ArrayList<Apuesta> apuestas) {
-        ArrayList<String> formateado = new ArrayList<>();
-//        if (apuestas != null && !apuestas.isEmpty()){
-//           
-//                formateado.add(tmp);
-//            }
-//        }
         lista_Apuestas.setListData(apuestas.toArray());
     }
 
@@ -127,6 +119,6 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
     }
 
     private void mostrarNumeroSorteado(Apuesta apuesta) {
-        lbl_nroSorteado.setText("Numero ganador: " + apuesta.getRonda().getNroGanador());
+        lbl_nroSorteado.setText("Numero ganador: " + apuesta.getRonda().getNroGanador().getValor());
     }
 }

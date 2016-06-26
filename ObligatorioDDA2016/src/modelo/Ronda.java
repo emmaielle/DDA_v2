@@ -111,7 +111,7 @@ public class Ronda implements Observer{
             Numero tablero = mesa.buscarNumeroEnTablero(randomOut);
             nroGanador = new Numero(tablero.getValor(), tablero.getColor());
             lookForWinner();
-            this.fechaYhoraFin=new Date();
+            this.fechaYhoraFin = new Date();
             return nroGanador;
         }
         return nroGanador;
@@ -196,23 +196,30 @@ public class Ronda implements Observer{
 
     private void lookForWinner() {
         for (Apuesta a : apuestas){
-            if (a.esGanadora(nroGanador)) apuestasGanadoras.add(a);
+            if (a.esGanadora(nroGanador)) {
+                apuestasGanadoras.add(a);
+            }
+            modificarSaldos(a);
         }
     }
     
-    public void modificarSaldos() {
-        for (Apuesta a: apuestas){
-            Jugador j = a.getJugador().getJugador();
-            if (apuestasGanadoras != null && apuestasGanadoras.equals(a)){ // si hubo un ganador
-                j.modificarSaldo(true, a.getMonto()* 35);
-                j.setTotalCobrado(j.getTotalCobrado() + a.getMonto() * 35);
-                j.setTotalApostado(j.getTotalApostado() + a.getMonto());
-                a.setMontoGanado(a.getMonto()* 35);
+    public void modificarSaldos(Apuesta a) {
+        Jugador j = a.getJugador().getJugador();
+        boolean ganadora = false;
+        if (!apuestasGanadoras.isEmpty()){
+            for (Apuesta ag : apuestasGanadoras){
+                if (ag != null && ag.equals(a)){ // si hubo un ganador
+                    j.modificarSaldo(true, a.getMonto()* a.getCoeficientePago());
+                    j.setTotalCobrado(j.getTotalCobrado() + a.getMonto() * a.getCoeficientePago());
+                    j.setTotalApostado(j.getTotalApostado() + a.getMonto());
+                    a.setMontoGanado(a.getMonto()* a.getCoeficientePago());
+                    ganadora = true;
+                }
             }
-            else {
-                j.setTotalApostado(j.getTotalApostado() + a.getMonto());
-                a.setMontoGanado(0);
-            }
+        }
+        if (!ganadora) {
+            j.setTotalApostado(j.getTotalApostado() + a.getMonto());
+            a.setMontoGanado(0);
         }
         Modelo.getInstancia().avisar(Modelo.EVENTO_ACTUALIZA_SALDOS);
     }
@@ -276,6 +283,10 @@ public class Ronda implements Observer{
         }
         else a = null;
         return a;
+    }
+
+    public void agregar(Apuesta a) {
+        apuestas.add(a);
     }
 
 

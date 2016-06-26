@@ -210,7 +210,6 @@ public class Mesa {
         Ronda ultimaRonda = buscarRonda(getUltimaRonda());
         Numero nro = ultimaRonda.sortearNroGanador(); 
         // reviso resultados // aviso ganadores // reparto plata // guardo historial
-        ultimaRonda.modificarSaldos();
         persistencia();
         nuevaRonda();
         Modelo.getInstancia().avisar(Modelo.EVENTO_SORTEARNUMERO);

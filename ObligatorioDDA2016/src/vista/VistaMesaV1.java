@@ -172,4 +172,9 @@ public class VistaMesaV1 extends javax.swing.JDialog implements VistaMesa, Actio
         top.mostrarSegundos(s);
     }
 
+    @Override
+    public void resetButtons() {
+        top.resetButtons();
+    }
+
 }
