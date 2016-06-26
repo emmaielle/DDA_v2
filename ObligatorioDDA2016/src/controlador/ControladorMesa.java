@@ -54,6 +54,7 @@ public class ControladorMesa implements Observer {
             if (!modelo.estaEnEspera(jugador, mesa))  vista.habilitar(true);
             mensajeRonda();
             mostrarSaldo();
+            resetButtons();
         }
         else if (arg.equals(Modelo.EVENTO_NUEVO_JUGADOR_MESA_RULETA) || arg.equals(Modelo.EVENTO_SALIR_MESA)){
             vista.mostrarJugadores(modelo.getJugadoresPorMesa(mesa));
@@ -126,5 +127,9 @@ public class ControladorMesa implements Observer {
 
     public void desapostar(String tipo) throws InvalidUserActionException{
         mesa.desapostar(tipo, jugador);
+    }
+
+    private void resetButtons() {
+        vista.resetButtons();
     }
 }

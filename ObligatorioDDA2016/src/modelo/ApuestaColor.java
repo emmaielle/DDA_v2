@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.awt.Color;
 import java.util.Date;
 
 /**
@@ -32,7 +33,10 @@ public class ApuestaColor extends Apuesta {
     @Override
     public boolean esGanadora(Numero numero) {
         String color = super.getNumero().split(" ")[1];
-        return numero.getColor().toString().equals(color); //check
+        Color selected = Color.GREEN;
+        if (color.equals("RED")) selected = Color.RED;
+        if (color.equals("BLACK")) selected = Color.BLACK;
+        return numero.getColor().equals(selected); //check
     }
 	 
 }

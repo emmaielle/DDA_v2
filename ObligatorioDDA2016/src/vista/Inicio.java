@@ -5,12 +5,7 @@
  */
 package vista;
 
-import java.time.Clock;
-import java.util.ArrayList;
-import mapeadores.MapeadorJugador;
-import modelo.Jugador;
 import modelo.Modelo;
-import persistencia.BaseDatos;
 
 /**
  *

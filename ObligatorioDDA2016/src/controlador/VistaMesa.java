@@ -30,4 +30,6 @@ public interface VistaMesa {
     public void colorJugador(Color color);
     public void verApuestas(JugadorRuleta j);
     public void mostrarSegundos(int s);
+
+    public void resetButtons();
 }

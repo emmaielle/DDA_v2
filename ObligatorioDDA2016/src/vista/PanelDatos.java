@@ -230,11 +230,11 @@ public class PanelDatos extends javax.swing.JPanel {
     }//GEN-LAST:event_veinticincoTreintayseisActionPerformed
 
     private void rojoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rojoActionPerformed
-        apostarToggle("Color rojo", rojo.isSelected(), rojo);
+        apostarToggle("Color RED", rojo.isSelected(), rojo);
     }//GEN-LAST:event_rojoActionPerformed
 
     private void negroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negroActionPerformed
-        apostarToggle("Color negro", negro.isSelected(), negro);
+        apostarToggle("Color BLACK", negro.isSelected(), negro);
     }//GEN-LAST:event_negroActionPerformed
 
 
@@ -341,6 +341,14 @@ public class PanelDatos extends javax.swing.JPanel {
 
     private void toggleButton(JToggleButton button) {
         if (button.isSelected()) button.setSelected(!button.isSelected());
+    }
+
+    void resetButtons() {
+        rojo.setSelected(false);
+        negro.setSelected(false);
+        unoDoce.setSelected(false);
+        treceVeinticuatro.setSelected(false);
+        veinticincoTreintayseis.setSelected(false);
     }
 
 }
