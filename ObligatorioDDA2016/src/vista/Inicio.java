@@ -17,11 +17,7 @@ public class Inicio {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-               
-        
         cargarDatos();
-        // cargardatos la tenemos que cambiar por que los traiga de BD
         Principal principal = new Principal();
         principal.setVisible(true);
         principal.setLocationRelativeTo(null);

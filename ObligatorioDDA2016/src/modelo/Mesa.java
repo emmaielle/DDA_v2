@@ -101,7 +101,7 @@ public class Mesa {
         jugadoresMesa.remove(j);
         jugadoresEspera.remove(j);
         j.getJugador().setEnMesa(false);
-        if(jugadoresMesa.size()>0) buscarRonda(getUltimaRonda()).eliminarApuestas(j);
+        if(jugadoresMesa.size()>0) buscarRonda(getUltimaRonda()).eliminarApuestas(j.getJugador());
         if (!j.isApostado()) {
             apuestaTotal();
         }
@@ -348,7 +348,7 @@ public class Mesa {
         String user="root";
         String pass="";
         BaseDatos bd = BaseDatos.getInstancia();
-        bd.conectar(url, user, pass);
+        bd.conectar();
         for(JugadorRuleta jr:jugadoresMesa){
             persistoJugador(jr, bd);
             persistoRonda(jr,bd);   
@@ -359,7 +359,7 @@ public class Mesa {
 
     private void persistoJugador(JugadorRuleta jr, BaseDatos bd) {
         MapeadorJugador map = new MapeadorJugador();
-        ArrayList jugadores = bd.consultar(map, " where u.oid = "+jr.getJugador().getOid());
+        ArrayList jugadores = bd.consultar(map, " and u.oid = "+jr.getJugador().getOid());
         Jugador j = (Jugador) jugadores.get(0);
         map.setJ(j);
         j.setSaldo(jr.getJugador().getSaldo());

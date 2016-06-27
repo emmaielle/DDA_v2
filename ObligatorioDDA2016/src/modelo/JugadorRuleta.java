@@ -6,13 +6,12 @@
 package modelo;
 
 import java.awt.Color;
-import java.util.ArrayList;
 
 /**
  *
  * @author Euge
  */
-public class JugadorRuleta {
+public class JugadorRuleta implements TipoJugador{
     private Color color;
     private Mesa mesa;
     private Jugador jugador;
@@ -26,6 +25,7 @@ public class JugadorRuleta {
         this.mesa = mesa;
         this.jugador = jugador;
         this.apostado = false;
+        jugador.setJugadorTipo(this);
     }
     //</editor-fold>
     
@@ -83,13 +83,7 @@ public class JugadorRuleta {
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Metodos">
-    public void agregarApuesta(Apuesta a){
-        if(a!=null) jugador.getApuestas().add(a);
-    }
 
-    public void quitarApuesta(Apuesta a){
-        if (jugador.getApuestas().contains(a)) jugador.getApuestas().remove(a);
-    }
 
     public boolean expulsado() {
         return jugador.getSaldo() == 0;

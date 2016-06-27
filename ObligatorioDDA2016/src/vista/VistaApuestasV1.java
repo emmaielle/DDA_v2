@@ -58,17 +58,17 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
         jScrollPane1.setViewportView(lista_Apuestas);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(48, 102, 483, 206);
+        jScrollPane1.setBounds(48, 102, 560, 230);
 
         lista_Apuestas_ENRONDA.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jScrollPane2.setViewportView(lista_Apuestas_ENRONDA);
 
         getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(48, 369, 483, 206);
+        jScrollPane2.setBounds(50, 390, 560, 206);
 
         jLabel1.setText("Apuestas en la ronda:");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(48, 331, 106, 14);
+        jLabel1.setBounds(50, 360, 106, 14);
 
         jLabel2.setText("Apuestas:");
         getContentPane().add(jLabel2);
@@ -78,9 +78,9 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
         lbl_nroSorteado.setForeground(new java.awt.Color(255, 51, 51));
         lbl_nroSorteado.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         getContentPane().add(lbl_nroSorteado);
-        lbl_nroSorteado.setBounds(171, 331, 360, 26);
+        lbl_nroSorteado.setBounds(250, 350, 360, 26);
 
-        setBounds(0, 0, 584, 628);
+        setBounds(0, 0, 694, 772);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lista_ApuestasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lista_ApuestasValueChanged
@@ -121,7 +121,7 @@ public class VistaApuestasV1 extends javax.swing.JDialog implements VistaApuesta
     private ArrayList<String> formatApuestas(ArrayList<Apuesta> apuestas) {
         ArrayList<String> out = new ArrayList<>();
         for (Apuesta a: apuestas){
-            String tmp = "Jugador: " + a.getJugador().getJugador().getNombreCompleto() + 
+            String tmp = "Jugador: " + a.getJugador().getNombreCompleto() + 
                     "; Apuesta: " + a.getNumero() + 
                     "; Monto ganado: " + a.getMontoGanado();
             out.add(tmp);

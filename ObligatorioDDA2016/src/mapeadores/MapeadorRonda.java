@@ -11,6 +11,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import modelo.Apuesta;
+import modelo.Jugador;
+import modelo.Mesa;
 import modelo.Numero;
 import modelo.Ronda;
 import persistencia.Persistente;
@@ -49,8 +51,9 @@ public class MapeadorRonda implements Persistente{
     public ArrayList<String> getSqlInsert() {
         ArrayList<String> sqls = new ArrayList();
         sqls.add(
-                "INSERT INTO ronda (oid,fechaYhoraFin,nomMesa,nroSorteado) VALUES " +
-                  "(" + getOid() + ",'" + new Timestamp(r.getFechaYhoraFin().getTime()) + "','" + r.getMesa().getNombre()+
+                "INSERT INTO ronda (oid,numRonda,fechaYhoraFin,nomMesa,nroSorteado) VALUES " +
+                  "(" + getOid() + "," + r.getNroRonda() + ",'" + new Timestamp(r.getFechaYhoraFin().getTime()) + "','" 
+                        + r.getMesa().getNombre()+
                   "'," + r.getNroGanador().getValor() + ")");
         agregarApuestas(sqls);
         return sqls;
@@ -76,7 +79,7 @@ public class MapeadorRonda implements Persistente{
 
     @Override
     public String getSqlSelect() {
-        String sql = "SELECT * FROM ronda";
+        String sql = "SELECT * FROM ronda r"; //, apuesta a where r.oid = a.oidRonda
         if(r!=null) sql+= " where oid=" + getOid();
         return sql;
     }
@@ -84,11 +87,15 @@ public class MapeadorRonda implements Persistente{
     @Override
     public void leer(ResultSet rs) {
         try {
-            r.setOid(rs.getInt("oid"));
-            r.setFechaYhoraFin(new Date(rs.getTimestamp("fechaYhoraFin").getTime()));
-            r.getMesa().setNombre(rs.getString("nomMesa")); // esto va a estar mal creo
-            int valor = Integer.getInteger(rs.getString("nroGanador"));
-            r.setNroGanador(new Numero(valor));
+            if (r.getOid() != 0){
+                r.setOid(rs.getInt("oid"));
+                r.setFechaYhoraFin(new Date(rs.getTimestamp("fechaYhoraFin").getTime()));
+                r.setMesa(new Mesa(rs.getString("nomMesa"))); 
+                int valor = rs.getInt("nroSorteado");
+                r.setNroGanador(new Numero(valor));
+            }
+//            r.agregar(rs.getInt("monto"), rs.getString("numero"), 
+//                    new Date(rs.getTimestamp("fechaHoraCreacion").getTime()));
         } catch (SQLException ex) {
             System.out.println("Error al leer la ronda:" + ex.getMessage());
         }
@@ -96,7 +103,7 @@ public class MapeadorRonda implements Persistente{
 
     @Override
     public void crearNuevo() {
-        //r = new Ronda(numRonda, null);
+        r = new Ronda();
     }
 
     @Override
@@ -107,9 +114,11 @@ public class MapeadorRonda implements Persistente{
     private void agregarApuestas(ArrayList<String> sqls) {
         ArrayList<Apuesta> apuestas = r.getApuestas();
         for(Apuesta a:apuestas){
-            sqls.add("INSERT INTO apuesta (oidRonda,numero,monto,montoGanado,oidJugador) values ("+getOid()+",'"
-                    +a.getNumero()+"',"+a.getMonto()+","+a.getMontoGanado()+","+a.getJugador().getJugador().getOid()+")");
+            sqls.add("INSERT INTO apuesta (oidRonda,fechaHoraCreacion,numero,monto,montoGanado,oidJugador) values ("+getOid()+",'"
+                    + new Timestamp(a.getFechaHora().getTime()) + "','"+ a.getNumero() + "',"+a.getMonto()+","+a.getMontoGanado()+
+                    ","+a.getJugador().getOid()+")");
         }
     }
+    
     
 }

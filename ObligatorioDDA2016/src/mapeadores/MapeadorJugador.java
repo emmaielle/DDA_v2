@@ -7,9 +7,14 @@ package mapeadores;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import modelo.Jugador;
+import modelo.Mesa;
+import modelo.Numero;
+import modelo.Ronda;
+import persistencia.BaseDatos;
 import persistencia.Persistente;
 
 /**
@@ -65,10 +70,10 @@ public class MapeadorJugador implements Persistente {
 
     @Override
     public String getSqlSelect() {
-        String sql = "SELECT * FROM usuario u LEFT JOIN apuesta a ON u.oid=a.oidJugador LEFT JOIN ronda r ON a.oidRonda=r.oid";
-        // u LEFT JOIN apuesta a ON u.oid=a.oidJugador LEFT JOIN ronda r ON a.oidRonda=r.oid
-        if(j!=null) {sql+= " where u.oid=" + getOid();
-        sql+=" ORDER BY u.oid,r.oid";}
+        String sql = 
+        "SELECT * FROM usuario u LEFT JOIN apuesta a ON u.oid=a.oidJugador LEFT JOIN ronda r ON a.oidRonda=r.oid";
+        if(j!=null) sql+= " and u.oid=" + getOid();
+        sql+=" ORDER BY u.oid,r.oid";
         return sql;
     }
 
@@ -82,16 +87,24 @@ public class MapeadorJugador implements Persistente {
                 j.setNombreCompleto(rs.getString("nombreUsuario"));
                 j.setSaldo(rs.getInt("saldo"));
             }
-            if(rs.getTimestamp("fechaYhoraFin")!=null){
-            j.agregar(rs.getString("numero"),rs.getInt("monto"),rs.getInt("oidRonda"),
-                    new Date(rs.getTimestamp("fechaYhoraFin").getTime()),
-                    rs.getString("nomMesa"),rs.getInt("nroSorteado"),rs.getInt("montoGanado"));}
+            int oidRonda = rs.getInt("oidRonda");
+            if (oidRonda != 0){
+                String num = rs.getString("numero");
+                int monto = rs.getInt("monto");
+                int ganado = rs.getInt("montoGanado");
+
+                Ronda r = new Ronda();
+                r.setOid(oidRonda);
+                j.agregarApuesta(num,monto,r,ganado);
+            }
             
         } catch (SQLException ex) {
             System.out.println("Error al leer usuario:" + ex.getMessage());
         }
     }
 
+    
+    
     @Override
     public void crearNuevo() {
         j = new Jugador();

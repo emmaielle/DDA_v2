@@ -8,6 +8,7 @@ package modelo;
 import exceptions.InvalidUserActionException;
 import java.util.ArrayList;
 import mapeadores.MapeadorJugador;
+import mapeadores.MapeadorRonda;
 import persistencia.BaseDatos;
 
 /**
@@ -88,78 +89,13 @@ public class SistemaJugador {
         return total;
     }
     // </editor-fold>
-//
-//    public void persistoJugadores(){
-//        String url="jdbc:mysql://localhost/obligatoriodda2016";
-//        String user="root";
-//        String pass="";
-//        BaseDatos bd = BaseDatos.getInstancia();
-//        bd.conectar(url, user, pass);
-//        
-//        
-//        MapeadorJugador map = new MapeadorJugador();
-//        Jugador j = new Jugador("a","a","Juan Perez",1000);
-//        
-//        map.setJ(j);
-//        bd.guardar(map);
-//        System.out.println(j);
-//        j=new Jugador("b","b","Rodrigo Rodriguez",1000);
-//        map.setJ(j);
-//        bd.guardar(map);
-//                System.out.println(j);
-//
-//        j=new Jugador("c","c","Roberto Lopez",1000);
-//        map.setJ(j);
-//        bd.guardar(map);
-//                System.out.println(j);
-//
-//        j = new Jugador("d","d","Leticia Bueno",1000);
-//        map.setJ(j);
-//        bd.guardar(map);
-//                System.out.println(j);
-//
-//        j = new Jugador("e","e","Laura Lorenzo",1000);
-//        map.setJ(j);
-//        bd.guardar(map);
-//                System.out.println(j);
-//
-//        j=new Jugador("f","f","Luis Suarez",1000);
-//        map.setJ(j);
-//        bd.guardar(map);
-//                System.out.println(j);
-//
-//        j = new Jugador("g","g","Moira Lasserre",1000);
-//        map.setJ(j);
-//        bd.guardar(map);
-//                System.out.println(j);
-//
-//        j=new Jugador("h","h","Maria Eugenia Cremona",1000);
-//        map.setJ(j);
-//        bd.guardar(map);
-//                System.out.println(j);
-//
-//        j=new Jugador("i","i","Dario Campalans",1000);
-//        map.setJ(j);
-//        bd.guardar(map);
-//                System.out.println(j);
-//
-//        j=new Jugador("j","j","Gabriel Serrano",1000);
-//        map.setJ(j);
-//        bd.guardar(map);
-//        
-//        System.out.println(j);
-// 
-//        bd.desconectar();
-//    }
+
     public void obtenerJugadores(){
-        String url="jdbc:mysql://localhost/obligatoriodda2016";
-        String user="root";
-        String pass="";
         BaseDatos bd = BaseDatos.getInstancia();
-        bd.conectar(url, user, pass);
+        bd.conectar();
         MapeadorJugador map = new MapeadorJugador();
         ArrayList juga = bd.obtenerTodos(map);
-        //bd.obtenerTodos(map);
+        // problema 1: no esta tomando todos los jugadores como unicos. juntar
         for(Object o:juga){
             Jugador ju = (Jugador)o;
             ju.setSaldo(1000);
@@ -167,9 +103,34 @@ public class SistemaJugador {
             bd.guardar(map);
             jugadores.add(ju);
         }
-        
+        retrieveApuestasFromDB(bd, jugadores);
         bd.desconectar();
 
     }
-    
+    public void retrieveApuestasFromDB(BaseDatos bd, ArrayList<Jugador> jugadoresArray){
+        ArrayList<Ronda> rondas = new ArrayList<>();
+        for (Jugador j : jugadoresArray){
+            ArrayList<Apuesta> apuestas = j.getApuestas();
+            for (Apuesta a : apuestas){ //para cada una de esas apuestas, le termino de agregar la info de la ronda
+                boolean bYaEstaba = false; 
+                Ronda r;    
+                for (int i = 0; i < rondas.size(); i++){ // al primero no entra porque la lista de rondas esta vacia
+                    if (rondas.get(i).getOid() == a.getRonda().getOid()) {
+                        r = (Ronda)rondas.get(i);
+                        a.setRonda(r);
+                        r.agregar(a);
+                        bYaEstaba = true;
+                        break;
+                    }
+                }
+                if (rondas.isEmpty() || !bYaEstaba) { 
+                    r = (Ronda)bd.consultar(new MapeadorRonda(), "where oid = " + a.getRonda().getOid() + " ORDER BY r.oid").get(0);
+                    rondas.add(r);
+                    a.setRonda(r);
+                    r.agregar(a);
+                }
+                a.setJugador(j);
+            }
+        }
+    }
 }

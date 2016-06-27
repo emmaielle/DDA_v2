@@ -5,7 +5,6 @@
  */
 package modelo;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -26,6 +25,7 @@ public class Jugador {
     private boolean enMesa;
     private boolean statsOn;
     private boolean apuestasOn;
+    private TipoJugador jugadorTipo;
     private ArrayList<Apuesta> apuestas = new ArrayList<>();
     
     // <editor-fold defaultstate="collapsed" desc="Constructor">   
@@ -136,6 +136,14 @@ public class Jugador {
         this.apuestasOn = apuestasOn;
         Modelo.getInstancia().avisar(Modelo.EVENTO_APUESTASWINDOW);
     }
+
+    public TipoJugador getJugadorTipo() {
+        return jugadorTipo;
+    }
+
+    public void setJugadorTipo(TipoJugador jugadorTipo) {
+        this.jugadorTipo = jugadorTipo;
+    }
     
     
     // </editor-fold>
@@ -159,35 +167,24 @@ public class Jugador {
     
     // </editor-fold>
 
-    public void agregar(String string, int aInt, int aInt0, Date date, String string0, int aInt1,int montGan) {
-        Ronda r = new Ronda(aInt0, new Mesa(string0));
-        r.setNroGanador(new Numero(aInt1));
-        if(string.contains("Pleno")){
-            ApuestaPleno a= new ApuestaPleno(aInt, new JugadorRuleta(Color.yellow, null, this), string, null, r, date);
-            a.setMontoGanado(montGan);
-            //agregue r.agregar para que las agregue de a una....
-            
-            apuestas.add(a);
-        }
-        if(string.contains("Docena")){
-            ApuestaDocena b=new ApuestaDocena(aInt1, new JugadorRuleta(Color.yellow, null, this), string, r, date);
-            b.setMontoGanado(montGan);
-            //r.agregar(b);
-            apuestas.add(b);
-        }
-        if(string.contains("Color")){
-            ApuestaColor c=new ApuestaColor(aInt1, new JugadorRuleta(Color.yellow, null, this), string, r, date);
-            c.setMontoGanado(montGan);
-            //r.agregar(c);
-            apuestas.add(c);
-        }
-        //no anda así hay q buscar otra solucion
-        for(Apuesta a:apuestas){
-            if(a.getRonda()==r)
-                r.setApuestas(apuestas);
-        }
-        
+    public void agregarApuesta(String tipoApuesta, int montoApostado, Ronda r, int montGan) {
+        Numero num = null;
+        if (tipoApuesta.contains("Pleno")) num = new Numero(Integer.parseInt(tipoApuesta.split(" ")[1]));;
+        Apuesta a = r.setApuestaByType(tipoApuesta, montoApostado, this, num);
+        r.agregar(a);
+        a.setJugador(this);
+        a.setMontoGanado(montGan);
+        agregarApuesta(a);
     }
+
+    public void agregarApuesta(Apuesta a){
+        if(a!=null) getApuestas().add(a);
+    }
+
+    public void quitarApuesta(Apuesta a){
+        if (getApuestas().contains(a)) getApuestas().remove(a);
+    }
+
 
 
 

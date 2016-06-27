@@ -46,7 +46,7 @@ public class ControladorMesa implements Observer {
         }
         else if(arg.equals(Modelo.EVENTO_TABLERO)){
             vista.mostrar(mesa.getNumeros());
-            long tot = mesa.buscarRonda(mesa.getUltimaRonda()).totalApostadoRonda(jugador); // mas limpio??
+            long tot = mesa.buscarRonda(mesa.getUltimaRonda()).totalApostadoRonda(jugador.getJugador()); // mas limpio??
             vista.mostrarTotalApostado(tot);
         }
         else if(arg.equals(Modelo.EVENTO_SORTEARNUMERO)){            
